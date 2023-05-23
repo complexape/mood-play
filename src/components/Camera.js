@@ -7,7 +7,7 @@ const videoConstraints = {
     facingMode: "environment"
 };
 
-const captureInterval = 60000
+const captureInterval = 5000
 
 const Camera = () => {
 
@@ -30,10 +30,10 @@ const Camera = () => {
         }
     }, [webcamRef]);
 
-    useEffect(() => {
-        const interval = setInterval(capturePhoto, captureInterval);
-        return () => clearInterval(interval);
-    }, []);
+    // useEffect(() => {
+    //     const interval = setInterval(capturePhoto, captureInterval);
+    //     return () => clearInterval(interval);
+    // }, []);
 
     const onUserMedia = (e) => {
         console.log(e);

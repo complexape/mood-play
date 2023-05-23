@@ -4,7 +4,7 @@ import Webcam from 'react-webcam';
 const AllCameras = () => {
     const [devices, setDevices] = useState([]);
 
-    const handleDevices = React.useCallback(
+    const handleDevices = useCallback(
         (mediaDevices) => 
         setDevices(mediaDevices.filter(({kind}) => kind === 'videoinput')),
         [setDevices]
