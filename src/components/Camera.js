@@ -1,4 +1,4 @@
-import React, {useCallback, useRef, useState} from 'react';
+import React, {useCallback, useRef, useState, useEffect} from 'react';
 import Webcam from 'react-webcam';
 import predictScreenshot from '../middleware/api';
 
@@ -6,6 +6,8 @@ const videoConstraints = {
     window:540,
     facingMode: "environment"
 };
+
+const captureInterval = 60000
 
 const Camera = () => {
 
@@ -16,11 +18,22 @@ const Camera = () => {
 
     const capturePhoto = useCallback(async() => {
         const screenshotSrc = webcamRef.current.getScreenshot();
-        const prediction = await predictScreenshot(screenshotSrc);
-        console.log("screenshot");
-        SetPrediction(prediction);
-        setUrl(screenshotSrc);
+
+        if (!screenshotSrc) {
+            console.log("No Webcam!");
+        }
+        else {
+            const prediction = await predictScreenshot(screenshotSrc);
+            console.log("screenshot");
+            SetPrediction(prediction);
+            setUrl(screenshotSrc);
+        }
     }, [webcamRef]);
+
+    useEffect(() => {
+        const interval = setInterval(capturePhoto, captureInterval);
+        return () => clearInterval(interval);
+    }, []);
 
     const onUserMedia = (e) => {
         console.log(e);

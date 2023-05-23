@@ -11,18 +11,25 @@ const EYE_THRESHOLD = 0.5;
 const NEUTRAL_MULTIPLIER = 0.5;
 const TIRED_EMOTIONS = ["neutral", "sad"];
 
+const EYE_OFFSET = 0.015;
+const FACE_OFFSET = 0;
 
-const cropImage = (img, width, height, x, y) => {
-    const maxDimension = Math.max(width, height);
+const cropImage = (img, width, height, x, y, offset_factor) => {
+    width = height = Math.max(width, height)
+    width > height ? y -= width - height : x -= height - width;
+
+    const offset = parseInt(offset_factor * Math.min(img.width, img.height));
+    x = Math.max(0, x - offset);
+    y = Math.max(0, y - offset);
+    width = Math.min(width + 2 * offset, img.width - x);
+    height = Math.min(height + 2 * offset, img.height - y);
 
     const imageCanvas = document.createElement('canvas');
     const ctx = imageCanvas.getContext('2d');
-    imageCanvas.width = maxDimension;
-    imageCanvas.height = maxDimension;
-    const offsetX = (maxDimension - width) / 2;
-    const offsetY = (maxDimension - height) / 2;
+    imageCanvas.width = width;
+    imageCanvas.height = height;
 
-    ctx.drawImage(img, x, y, width, height, offsetX, offsetY, width, height);
+    ctx.drawImage(img, x, y, width, height, 0, 0, width, height);
     return imageCanvas;
 }
 
@@ -40,7 +47,7 @@ const reduceResolution = (base64Data, targetSize) => {
         img.onerror = reject;
         img.src = base64Data;
     });
-  };
+};
 
 const cropFaceAndEyes = async (base64Image) => {
     await faceapi.loadSsdMobilenetv1Model('/models');
@@ -61,7 +68,8 @@ const cropFaceAndEyes = async (base64Image) => {
         faceDetection.detection.box.width, 
         faceDetection.detection.box.height,
         faceDetection.detection.box.x,
-        faceDetection.detection.box.y
+        faceDetection.detection.box.y,
+        FACE_OFFSET
     );
     const faceBase64 = await reduceResolution(croppedFace.toDataURL(), FACE_RESOLUTION);
     // console.log(faceBase64);
@@ -71,7 +79,8 @@ const cropFaceAndEyes = async (base64Image) => {
         faceDetection.landmarks.getRightEye()[3].x - faceDetection.landmarks.getRightEye()[0].x,
         faceDetection.landmarks.getRightEye()[4].x - faceDetection.landmarks.getRightEye()[1].x,
         faceDetection.landmarks.getRightEye()[0].x,
-        faceDetection.landmarks.getRightEye()[1].y
+        faceDetection.landmarks.getRightEye()[1].y,
+        EYE_OFFSET
     )
     const rightEyeBase64 = await reduceResolution(croppedRightEye.toDataURL(), EYE_RESOLUTION);
 
@@ -80,7 +89,8 @@ const cropFaceAndEyes = async (base64Image) => {
         faceDetection.landmarks.getLeftEye()[3].x - faceDetection.landmarks.getLeftEye()[0].x,
         faceDetection.landmarks.getLeftEye()[4].x - faceDetection.landmarks.getLeftEye()[1].x,
         faceDetection.landmarks.getLeftEye()[0].x,
-        faceDetection.landmarks.getLeftEye()[1].y
+        faceDetection.landmarks.getLeftEye()[1].y,
+        EYE_OFFSET
     )
     const leftEyeBase64 = await reduceResolution(croppedLeftEye.toDataURL(),  EYE_RESOLUTION);
     
@@ -113,6 +123,10 @@ const predictScreenshot = async (screenshotSrc) => {
         return null;
     }
     const [faceData, leftEyeData, rightEyeData] = base64Images;
+
+    console.log(faceData);
+    console.log(leftEyeData);
+    console.log(rightEyeData);
 
     // let emotionPredictions = getEmotionPredictions(faceData);
     // emotionPredictions[6] = emotionPredictions[6] * NEUTRAL_MULTIPLIER;
