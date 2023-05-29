@@ -4,15 +4,14 @@ import * as faceapi from 'face-api.js';
 const EYE_RESOLUTION = 64;
 const FACE_RESOLUTION = 48;
 
-const EMOTIONURL = "";
-const TIREDURL = "";
+const EMOTIONURL = "https://mood-detector-api.vercel.app/api/predict-emotion";
+const TIREDURL = "https://mood-detector-api.vercel.app/api/predict-tired";
 
-const EYE_THRESHOLD = 0.5;
-const NEUTRAL_MULTIPLIER = 0.5;
+const EYE_THRESHOLD = 0.999;
 const TIRED_EMOTIONS = ["neutral", "sad"];
 
-const EYE_OFFSET = 0.015;
-const FACE_OFFSET = 0;
+const EYE_OFFSET = 0.04;
+const FACE_OFFSET = -0.03;
 
 const cropImage = (img, width, height, x, y, offset_factor) => {
     width = height = Math.max(width, height)
@@ -98,23 +97,17 @@ const cropFaceAndEyes = async (base64Image) => {
 }
 
 const getEmotionPredictions = (emotionData) => {
-    axios.post(EMOTIONURL, {data: emotionData})
-        .then((response) => {
-            return response.data;
-        })
-        .catch((error) => {
-            console.error(error);
-        });
+    // remove base64 prefix
+    emotionData = emotionData.substring(emotionData.indexOf(',') + 1);
+
+    return axios.post(EMOTIONURL, {imgData: emotionData});
 }
 
 const getTiredPrediction = (tiredData) => {
-    axios.post(TIREDURL, {data: tiredData})
-        .then((response) => {
-            return response.data;
-        })
-        .catch((error) => {
-            console.error(error);
-        });
+    // remove base64 prefix
+    tiredData = tiredData.substring(tiredData.indexOf(',') + 1);
+
+    return axios.post(TIREDURL, {imgData: tiredData});
 }
 // returns emotion predicted or null if no face found
 const predictScreenshot = async (screenshotSrc) => {
@@ -123,35 +116,33 @@ const predictScreenshot = async (screenshotSrc) => {
         return null;
     }
     const [faceData, leftEyeData, rightEyeData] = base64Images;
+    const [emotionPredictions, leftEyePrediction, rightEyePrediction] = await Promise.all([
+        getEmotionPredictions(faceData),
+        getTiredPrediction(leftEyeData),
+        getTiredPrediction(rightEyeData)
+    ]);
 
     console.log(faceData);
     console.log(leftEyeData);
     console.log(rightEyeData);
+    console.log(emotionPredictions.data);
+    console.log(leftEyePrediction.data);
+    console.log(rightEyePrediction.data);
 
-    // let emotionPredictions = getEmotionPredictions(faceData);
-    // emotionPredictions[6] = emotionPredictions[6] * NEUTRAL_MULTIPLIER;
     
-    // let maxEmotion = "";
-    // let maxValue = 0;
-    // for(const [emotion, value] of Object.entries(emotionPredictions)) {
-    //     if(value > maxValue) {
-    //         maxValue = value;
-    //         maxEmotion = emotion;
-    //     }
-    // }
+    let [maxEmotion, maxValue] = ["", 0];
+    for (const [emotion, value] of Object.entries(emotionPredictions.data)) {
+        if (value > maxValue) {
+            maxValue = value;
+            maxEmotion = emotion;
+        }
+    }
 
-    // let tiredPrediction = getTiredPrediction(leftEyeData) > EYE_THRESHOLD;
-    // tiredPrediction &= getTiredPrediction(rightEyeData) > EYE_THRESHOLD;
-
-    // console.log(emotionPredictions);
-    // console.log(tiredPrediction);
+    let tiredPrediction = leftEyePrediction.data["closed_eye"] > EYE_THRESHOLD;
+    tiredPrediction &= rightEyePrediction.data["closed_eye"] > EYE_THRESHOLD;
     
-    // let result = maxEmotion;
-    // if (TIRED_EMOTIONS.includes(maxEmotion) && tiredPrediction) {
-    //     result = "tired";
-    // }
-    // return result;
-    return "1";
+    const result = tiredPrediction && TIRED_EMOTIONS.includes(maxEmotion) ? "tired" : maxEmotion;
+    return result;
 }
 
 export default predictScreenshot;

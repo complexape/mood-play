@@ -28,7 +28,7 @@ const Camera = () => {
             SetPrediction(prediction);
             setUrl(screenshotSrc);
         }
-    }, [webcamRef]);
+    }, [webcamRef, prediction]);
 
     // useEffect(() => {
     //     const interval = setInterval(capturePhoto, captureInterval);
@@ -44,20 +44,20 @@ const Camera = () => {
             <Webcam
                 ref = {webcamRef}
                 audio = {false}
-                screenshotFormat='image/png'
+                screenshotFormat='image/jpeg'
                 videoConstraints={videoConstraints}
                 onUserMedia={onUserMedia}
             />
             <button onClick={capturePhoto}>Capture</button>
             <button onClick={() => setUrl(null)}>Refresh</button>
+            {prediction && (
+                <div>
+                    <h1>I Predict that you are: {prediction}</h1>
+                </div>
+            )}
             {url && (
                 <div>
                     <img src={url} alt="Screenshot"/>
-                </div>
-            )}
-            {prediction && (
-                <div>
-                    <h1>prediction</h1>
                 </div>
             )}
         </>
