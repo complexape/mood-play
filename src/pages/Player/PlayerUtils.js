@@ -1,4 +1,4 @@
-import * as faceapi from 'face-api.js';
+import { faceapi } from '../../middleware/FaceApi';
 import { getTiredPrediction, getEmotionPredictions } from '../../middleware/api';
 
 const EYE_RESOLUTION = 64;
@@ -46,14 +46,10 @@ const reduceResolution = (base64Data, targetSize) => {
 };
 
 const extractFaceAndEyes = async (base64Image) => {
-    await faceapi.loadSsdMobilenetv1Model('/models');
-    await faceapi.loadFaceLandmarkModel('/models');
-
     const image = await faceapi.fetchImage(base64Image);
 
     // Detect faces in the image
     const faceDetection = await faceapi.detectSingleFace(image).withFaceLandmarks();
-
     if (!faceDetection) {
         return null;
     }
@@ -112,8 +108,8 @@ export const predictScreenshot = async (screenshotSrc) => {
     if (!base64Images) {
         return null;
     }
-    
-    const [faceData, leftEyeData, rightEyeData] = base64Images; 
+
+    const [faceData, leftEyeData, rightEyeData] = base64Images;
     const responses = await Promise.all([
         getEmotionPredictions(faceData),
         getTiredPrediction(leftEyeData),

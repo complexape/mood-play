@@ -1,12 +1,8 @@
 import React, { useCallback, useRef, useState, useEffect } from 'react';
 import Webcam from 'react-webcam';
 import { displayMoodText, predictScreenshot } from './PlayerUtils';
-import './Player.css'
-
-const videoConstraints = {
-    window:540,
-    facingMode: "environment"
-};
+import './Player.css';
+import Header from '../../components/Header';
 
 // in milliseconds
 const updateInterval = 10000;
@@ -30,7 +26,7 @@ const Player = () => {
             console.log("No face detected.")
         }
         setMood(mood);
-    }, [webcamRef, mood])
+    }, [webcamRef])
 
     // useEffect(() => {
     //     const interval = setInterval(updateMood, updateInterval);
@@ -39,10 +35,12 @@ const Player = () => {
 
     return (
         <>
-            <h1>MoodPlay</h1>
-            <h1>Current Mood: {displayMoodText(mood)}</h1>
+            <Header>MoodPlay</Header>
+            <Header> Current Mood: {displayMoodText(mood)} </Header>
+
             <button onClick={updateMood}>Update Mood</button>
             <button onClick={() => {setShowImgSrc(!showImgSrc)}}>Toggle Screenshot Image</button>
+
             <Webcam
                 ref = {webcamRef}
                 audio = {false}
