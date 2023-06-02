@@ -55,8 +55,7 @@ const extractFaceAndEyes = async (base64Image) => {
     const faceDetection = await faceapi.detectSingleFace(image).withFaceLandmarks();
 
     if (!faceDetection) {
-        console.log("No Detections Found");
-        return [];
+        return null;
     }
 
     const croppedFace = cropImage(

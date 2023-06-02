@@ -10,26 +10,21 @@ import {
 
 const Navbar = () => {
     return (
-        <>
-            <Nav>
-                <Bars />
+        <Nav>
+            <Bars />
 
-                <NavMenu>
-                    <NavLink to='/'>
-                        Home
-                    </NavLink>
-                    <NavLink to='/settings'>
-                        Settings
-                    </NavLink>
-                    <NavLink to='/player'>
-                        Player
-                    </NavLink>
-                </NavMenu>
-                <NavBtn>
-                    <NavBtnLink to='/sign-in'>Sign In</NavBtnLink>
-                </NavBtn>
-            </Nav>
-        </>
+            <NavMenu>
+                <NavLink to='/'>
+                    MoodPlay
+                </NavLink>
+                <NavLink to='/settings'>
+                    Settings
+                </NavLink>
+            </NavMenu>
+            <NavBtn>
+                <NavBtnLink to='/sign-in'>Sign In</NavBtnLink>
+            </NavBtn>
+        </Nav>
     );
 };
 

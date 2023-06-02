@@ -1,7 +1,7 @@
 import React, { useCallback, useRef, useState, useEffect } from 'react';
 import Webcam from 'react-webcam';
 import { displayMoodText, predictScreenshot } from './PlayerUtils';
-import AudioPlayer from './AudioPlayer';
+import './Player.css'
 
 const videoConstraints = {
     window:540,
@@ -15,8 +15,8 @@ const Player = () => {
     const webcamRef = useRef(null)
 
     const [mood, setMood] = useState('neutral');
-    const [url, setUrl] = useState(null);
-    const [showURL, setShowURL] = useState(true);
+    const [imgSrc, setImgSrc] = useState(null);
+    const [showImgSrc, setShowImgSrc] = useState(true);
 
     const updateMood = useCallback(async () => {
         const screenshotSrc = webcamRef.current.getScreenshot();
@@ -24,7 +24,7 @@ const Player = () => {
             console.log("No webcam.")
             return;
         }
-        setUrl(screenshotSrc);
+        setImgSrc(screenshotSrc);
         const mood = await predictScreenshot(screenshotSrc);
         if (!mood) {
             console.log("No face detected.")
@@ -42,18 +42,19 @@ const Player = () => {
             <h1>MoodPlay</h1>
             <h1>Current Mood: {displayMoodText(mood)}</h1>
             <button onClick={updateMood}>Update Mood</button>
-            <button onClick={() => {setShowURL(!showURL)}}>Toggle Hide URL</button>
+            <button onClick={() => {setShowImgSrc(!showImgSrc)}}>Toggle Screenshot Image</button>
             <Webcam
                 ref = {webcamRef}
                 audio = {false}
                 screenshotFormat='image/jpeg'
                 onUserMedia={(e) => { console.log(e); }}
-                style={{position: 'absolute', right: '100%'}}
             />
-            <AudioPlayer mood={mood}/>
-            {url && showURL && (
+            <div>
+                <h2>Playing mood: {mood}</h2>
+            </div>
+            {imgSrc && showImgSrc && (
                 <div>
-                    <img src={url} alt="Screenshot"/>
+                    <img src={imgSrc} alt="Screenshot"/>
                 </div>
             )}
         </>
