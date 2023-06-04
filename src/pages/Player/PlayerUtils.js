@@ -102,6 +102,14 @@ export const displayMoodText = (mood) => {
     return moods[mood] || moods["neutral"];
 }
 
+export const shuffleRandomNext = (size, exc = -1) => {
+    let ret = exc;
+    while (ret === exc) {
+        ret = Math.floor(Math.random() * size);
+    }
+    return ret;
+}
+
 // returns emotion predicted or null if no face found
 export const predictScreenshot = async (screenshotSrc) => {
     const base64Images = await extractFaceAndEyes(screenshotSrc);
