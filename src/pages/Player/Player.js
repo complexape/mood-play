@@ -3,7 +3,6 @@ import Webcam from 'react-webcam';
 import { displayMoodText, predictScreenshot } from './PlayerUtils';
 import './Player.css';
 import Header from '../../components/Header';
-import SpotifyPlayer from './SpotifyPlayer';
 
 // in milliseconds
 const updateInterval = 10000;
@@ -31,13 +30,25 @@ const Player = () => {
         handleMoodChange(mood);
     }, [webcamRef])
 
+    const changeSong = (newSongURI) => {
+        const embedContainer = document.getElementById('spotify-iframe-container');
+        embedContainer.setAttribute('data-songURI', newSongURI)
+        const event = new CustomEvent("change-song");
+        document.dispatchEvent(event);
+    }
+
     const handleMoodChange = (mood) => {
         setMood(mood);
-        setTimeout(() => {
-            const event = new CustomEvent("change-mood");
-            document.dispatchEvent(event);
-        }, 0);
+        // get new song from new mood playlist
+        // changeSong();
     }
+
+    useEffect(() => {
+        window.addEventListener('next-song', (event) => {
+            // get next song in current mood playlist
+            // changeSong();
+        });
+    })
 
     // useEffect(() => {
     //     const interval = setInterval(updateMood, updateInterval);
@@ -63,13 +74,6 @@ const Player = () => {
                 screenshotFormat='image/jpeg'
                 onUserMedia={(e) => { console.log(e); }}
             />
-
-            <div>
-                <SpotifyPlayer
-                    mood={mood}
-                    shuffle={shuffle}
-                />
-            </div>
             {imgSrc && showImgSrc && (
                 <div>
                     <img src={imgSrc} alt="Screenshot"/>
