@@ -1,11 +1,15 @@
 import React, { useCallback, useRef, useState, useEffect } from 'react';
 import Webcam from 'react-webcam';
-import { displayMoodText, predictScreenshot } from './PlayerUtils';
+import { displayMoodText, predictScreenshot, shuffleRandomNext } from './PlayerUtils';
 import './Player.css';
 import Header from '../../components/Header';
 
 // in milliseconds
 const updateInterval = 10000;
+
+const SONGS = {
+
+};
 
 const Player = () => {
     const webcamRef = useRef(null)
@@ -14,6 +18,7 @@ const Player = () => {
     const [imgSrc, setImgSrc] = useState(null);
     const [showImgSrc, setShowImgSrc] = useState(true);
     const [shuffle, setShuffle] = useState(false);
+    const [songIndex, setSongIndex] = useState(0);
 
     const updateMood = useCallback(async () => {
         const screenshotSrc = webcamRef.current.getScreenshot();
@@ -37,16 +42,24 @@ const Player = () => {
         document.dispatchEvent(event);
     }
 
-    const handleMoodChange = (mood) => {
-        setMood(mood);
-        // get new song from new mood playlist
-        // changeSong();
+    const handleMoodChange = (newMood) => {
+        setMood(newMood);
+        const playlistSize = SONGS[mood].length;
+        setSongIndex( 
+            shuffle ? shuffleRandomNext(playlistSize) : 0
+        );
+        changeSong(SONGS[mood][songIndex]);
     }
 
     useEffect(() => {
         window.addEventListener('next-song', (event) => {
-            // get next song in current mood playlist
-            // changeSong();
+            const playlistSize = SONGS[mood].length;
+            setSongIndex( 
+                shuffle ? 
+                    shuffleRandomNext(playlistSize, songIndex) : 
+                    (songIndex + 1) % playlistSize
+            );
+            changeSong(SONGS[mood][songIndex])
         });
     })
 
