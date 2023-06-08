@@ -21,14 +21,14 @@ function App() {
     return (
         <>
             <Navbar />
-            <div id="spotify-iframe-container" style={useMatch('/') ? showSpotifyStyle : hideSpotifyStyle}>
-                <div id="spotify-iframe"></div>
-            </div>
             <Routes>
                 <Route path='/' element={<Player/>} />
                 <Route path='/settings' element={<Settings/>} />
                 <Route path='/sign-in' element={<Signin/>} />
             </Routes>
+            <div id="spotify-iframe-container" style={useMatch('/') ? showSpotifyStyle : hideSpotifyStyle}>
+                <div id="spotify-iframe"></div>
+            </div>
         </>
     );
 }

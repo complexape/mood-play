@@ -1,4 +1,4 @@
-const DEFAULT_SONG = "https://open.spotify.com/track/5BZ4aodJTESrcaGQERLzjV?si=063b9c035eb64c0c";
+import { DEFAULT_SONG } from "../constants";
 
 window.onSpotifyIframeApiReady = (IFrameAPI) => {
     const element = document.getElementById('spotify-iframe');

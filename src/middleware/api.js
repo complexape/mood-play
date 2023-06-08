@@ -1,7 +1,5 @@
 import axios from 'axios';
-
-const EMOTIONURL = "https://mood-detection-api.vercel.app/api/predict-emotion";
-const TIREDURL = "https://mood-detection-api.vercel.app/api/predict-tired";
+import { EMOTIONURL, TIREDURL } from '../constants';
 
 export const getEmotionPredictions = (emotionData) => {
     // remove base64 prefix

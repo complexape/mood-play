@@ -1,15 +1,13 @@
 import React, { useCallback, useRef, useState, useEffect } from 'react';
 import Webcam from 'react-webcam';
+
 import { displayMoodText, predictScreenshot, shuffleRandomNext } from './PlayerUtils';
 import './Player.css';
 import Header from '../../components/Header';
+import { SONGS } from '../../constants';
 
 // in milliseconds
 const updateInterval = 10000;
-
-const SONGS = {
-
-};
 
 const Player = () => {
     const webcamRef = useRef(null)
