@@ -18,7 +18,7 @@ window.onSpotifyIframeApiReady = (IFrameAPI) => {
 
         document.addEventListener("change-song", handleNextSong);        
         EmbedController.addListener('playback_update', (e) => {
-            if (e['data']['position'] === e['data']['duration']) {
+            if (e['data']['position'] === e['data']['duration'] && e['data']['position'] > 0) {
                 const event = new CustomEvent("next-song");
                 document.dispatchEvent(event);
             }

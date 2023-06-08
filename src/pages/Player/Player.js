@@ -18,6 +18,16 @@ const Player = () => {
     const [shuffle, setShuffle] = useState(false);
     const [songIndex, setSongIndex] = useState(0);
 
+    const changeSong = (newSongURI) => {
+        console.log(newSongURI);
+        const embedContainer = document.getElementById('spotify-iframe-container');
+        embedContainer.setAttribute('data-songURI', newSongURI)
+        setTimeout(() => {
+            const event = new CustomEvent("change-song");
+            document.dispatchEvent(event);
+        });
+    }
+
     const updateMood = useCallback(async () => {
         const screenshotSrc = webcamRef.current.getScreenshot();
         if (!screenshotSrc) {
@@ -25,41 +35,41 @@ const Player = () => {
             return;
         }
         setImgSrc(screenshotSrc);
-        const mood = await predictScreenshot(screenshotSrc);
-        if (!mood) {
+        const newMood = await predictScreenshot(screenshotSrc);
+
+        if (!newMood) {
             console.log("No face detected.")
             return;
         }
-        handleMoodChange(mood);
-    }, [webcamRef])
-
-    const changeSong = (newSongURI) => {
-        const embedContainer = document.getElementById('spotify-iframe-container');
-        embedContainer.setAttribute('data-songURI', newSongURI)
-        const event = new CustomEvent("change-song");
-        document.dispatchEvent(event);
-    }
-
-    const handleMoodChange = (newMood) => {
+        if (newMood === mood) {
+            return;
+        }
+        
+        const playlistSize = SONGS[newMood].length;
+        const newSongIndex = shuffle ? shuffleRandomNext(playlistSize) : 0;
+        console.log(playlistSize);
+        changeSong(SONGS[newMood][songIndex]);
         setMood(newMood);
+        setSongIndex(newSongIndex);
+    }, [mood, shuffle, songIndex])
+
+    const handleNextSong = (event) => {
         const playlistSize = SONGS[mood].length;
-        setSongIndex( 
-            shuffle ? shuffleRandomNext(playlistSize) : 0
-        );
-        changeSong(SONGS[mood][songIndex]);
+        const nextSongIndex = shuffle ? 
+            shuffleRandomNext(playlistSize, songIndex) : 
+            (songIndex + 1) % playlistSize;
+        
+        console.log("NEXT SONG", songIndex, nextSongIndex);
+        changeSong(SONGS[mood][nextSongIndex]);
+        setSongIndex(nextSongIndex);
     }
 
     useEffect(() => {
-        window.addEventListener('next-song', (event) => {
-            const playlistSize = SONGS[mood].length;
-            setSongIndex( 
-                shuffle ? 
-                    shuffleRandomNext(playlistSize, songIndex) : 
-                    (songIndex + 1) % playlistSize
-            );
-            changeSong(SONGS[mood][songIndex])
-        });
-    })
+        document.addEventListener('next-song', handleNextSong);
+        return () => {
+            document.removeEventListener('next-song', handleNextSong)
+        };
+    }, [mood, shuffle, songIndex]);
 
     // useEffect(() => {
     //     const interval = setInterval(updateMood, updateInterval);
