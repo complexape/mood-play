@@ -1,10 +1,13 @@
+import { Routes, Route, useMatch } from 'react-router-dom';
+import { useState } from 'react';
+import { MoodContextProvider } from './context/MoodContext';
+
 import './App.css';
-import Navbar from './components/Navbar'
-import { BrowserRouter, Routes, Route, useMatch } from 'react-router-dom';
-import { Fragment, useEffect } from 'react';
+import Navbar from './components/Navbar';
 import Settings from './pages/Settings';
 import Signin  from './pages/Signin';
 import Player from './pages/Player/Player';
+import Wave from './components/Wave';
 import './middleware/spotify';
 
 const hideSpotifyStyle = {
@@ -19,17 +22,20 @@ const showSpotifyStyle = {
 
 function App() {
     return (
-        <>
-            <Navbar />
-            <Routes>
-                <Route path='/' element={<Player/>} />
-                <Route path='/settings' element={<Settings/>} />
-                <Route path='/sign-in' element={<Signin/>} />
-            </Routes>
-            <div id="spotify-iframe-container" style={useMatch('/') ? showSpotifyStyle : hideSpotifyStyle}>
-                <div id="spotify-iframe"></div>
+        <MoodContextProvider>
+            <div className={`app-container`}>
+                <Navbar />
+                <Wave/>
+                <Routes>
+                    <Route path='/' element={<Player/>} />
+                    <Route path='/settings' element={<Settings/>} />
+                    <Route path='/sign-in' element={<Signin/>} />
+                </Routes>
+                <div id="spotify-iframe-container" style={useMatch('/') ? showSpotifyStyle : hideSpotifyStyle}>
+                    <div id="spotify-iframe"></div>
+                </div>
             </div>
-        </>
+        </MoodContextProvider>
     );
 }
 

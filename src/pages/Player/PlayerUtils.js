@@ -4,9 +4,17 @@ import { getTiredPrediction, getEmotionPredictions } from '../../middleware/api'
 const EYE_RESOLUTION = 64;
 const FACE_RESOLUTION = 48;
 
-const EYE_THRESHOLD = 0.8;
+const EYE_THRESHOLD = 0.99;
 const EYE_MARGIN = 0.03;
 const FACE_MARGIN = -0.03;
+
+export const shuffleRandomNext = (size, exc = -1) => {
+    let ret = exc;
+    while (ret === exc) {
+        ret = Math.floor(Math.random() * size);
+    }
+    return ret;
+}
 
 const cropImage = (img, width, height, x, y, margin_factor) => {
     // Resize image to square
@@ -87,29 +95,6 @@ const extractFaceAndEyes = async (base64Image) => {
     return [faceBase64, leftEyeBase64, rightEyeBase64];
 }
 
-export const displayMoodText = (mood) => {
-    const moods = {
-        "angry": "Angry 😠",
-        "disgust": "Disgust 🤢",
-        "fear": "Fear 😨",
-        "happy": "Happy 😃",
-        "neutral": "Neutral 😶",
-        "sad": "Sad 😔",
-        "surprise": "Surprise 😮",
-        "tired": "Tired 😴"
-    };
-
-    return moods[mood] || moods["neutral"];
-}
-
-export const shuffleRandomNext = (size, exc = -1) => {
-    let ret = exc;
-    while (ret === exc) {
-        ret = Math.floor(Math.random() * size);
-    }
-    return ret;
-}
-
 // returns emotion predicted or null if no face found
 export const predictScreenshot = async (screenshotSrc) => {
     const base64Images = await extractFaceAndEyes(screenshotSrc);
@@ -144,7 +129,6 @@ export const predictScreenshot = async (screenshotSrc) => {
 
     let isTired = leftEyePrediction["closed_eye"] > EYE_THRESHOLD;
     isTired &= rightEyePrediction["closed_eye"] > EYE_THRESHOLD;
-
 
     return isTired ? "tired" : maxEmotion;
 }

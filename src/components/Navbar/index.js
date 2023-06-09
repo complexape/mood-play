@@ -14,7 +14,7 @@ const Navbar = () => {
             <Bars />
 
             <NavMenu>
-                <NavLink to='/'>
+                <NavLink to='/' reloadDocument>
                     MoodPlay
                 </NavLink>
                 <NavLink to='/settings'>

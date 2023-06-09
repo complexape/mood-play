@@ -60,4 +60,7 @@ export const SONGS = {
     "disgust": [
         "https://open.spotify.com/album/13GSfOTgzZjwp8JhmxgZr0?si=554f8e6a536f43be"
     ],
+    "fear": [
+        "https://open.spotify.com/track/1IN3RLkUXvVaBeI4BwyVUw?si=6cf2dae49091408e"
+    ]
 };
