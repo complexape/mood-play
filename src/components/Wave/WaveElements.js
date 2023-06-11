@@ -22,14 +22,23 @@ export const StyledSvg = styled.svg`
 export const StyledPathA = styled.path`
     stroke: none;
     fill : ${(props) => (props.mood.waveColorA)};
+    transition: all 1.5s ease;
+    -webkit-transition: all 1.5s ease;
+    -webkit-transition: all 1.5s ease;
 `;
 
 export const StyledPathB = styled.path`
     stroke: none;
     fill : ${(props) => (props.mood.waveColorB)};
+    transition: all 1.5s ease;
+    -webkit-transition: all 1.5s ease;
+    -webkit-transition: all 1.5s ease;
 `;
 
 export const StyledPathC = styled.path`
     stroke: none;
     fill : ${(props) => (props.mood.waveColorC)};
+    transition: all 1.5s ease;
+    -webkit-transition: all 1.5s ease;
+    -webkit-transition: all 1.5s ease;
 `;

@@ -1,5 +1,8 @@
-export const EMOTIONURL = "https://mood-detection-api.vercel.app/api/predict-emotion";
-export const TIREDURL = "https://mood-detection-api.vercel.app/api/predict-tired";
+export const EMOTION_URL = "https://mood-detection-api.vercel.app/api/predict-emotion";
+export const TIRED_URL = "https://mood-detection-api.vercel.app/api/predict-tired";
+
+// INCREASE IN PROD
+export const COOLDOWN_SECONDS = 5;
 
 export const DEFAULT_SONG = "https://open.spotify.com/track/5BZ4aodJTESrcaGQERLzjV?si=535c34478d434568";
 

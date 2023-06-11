@@ -1,20 +1,12 @@
 import { faceapi } from '../../middleware/FaceApi';
 import { getTiredPrediction, getEmotionPredictions } from '../../middleware/api';
-
-const EYE_RESOLUTION = 64;
-const FACE_RESOLUTION = 48;
-
-const EYE_THRESHOLD = 0.99;
-const EYE_MARGIN = 0.03;
-const FACE_MARGIN = -0.03;
-
-export const shuffleRandomNext = (size, exc = -1) => {
-    let ret = exc;
-    while (ret === exc) {
-        ret = Math.floor(Math.random() * size);
-    }
-    return ret;
-}
+import {
+    EYE_RESOLUTION,
+    FACE_RESOLUTION,
+    EYE_THRESHOLD,
+    EYE_MARGIN,
+    FACE_MARGIN
+} from '../../constants/DetectionConstants'
 
 const cropImage = (img, width, height, x, y, margin_factor) => {
     // Resize image to square

@@ -8,7 +8,7 @@ import {
     StyledPathC
 } from './WaveElements'
 
-const Wave = (props) => {
+const Wave = () => {
     const { mood } = useContext(MoodContext);
 
     return (

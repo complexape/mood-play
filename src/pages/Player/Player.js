@@ -1,32 +1,26 @@
 import React, { useCallback, useRef, useState, useEffect, useContext } from 'react';
 import Webcam from 'react-webcam';
 
-import { displayMoodText, predictScreenshot, shuffleRandomNext } from './PlayerUtils';
+import { predictScreenshot } from './PlayerUtils';
 import './Player.css';
 import Header from '../../components/Header';
-import { SONGS } from '../../constants';
 import { MoodContext } from '../../context/MoodContext';
-
+import { Button, ButtonContainer } from '../../components/Button';
+import SelectDropdown from '../../components/SelectDropdown';
+import MoodSelect from './MoodSelect';
 
 const Player = (props) => {
     const webcamRef = useRef(null)
-
-    const {mood, changeMood} = useContext(MoodContext);
+    const {
+        mood, 
+        changeMood, 
+        shuffle, 
+        setShuffle, 
+    } = useContext(MoodContext);
 
     const [imgSrc, setImgSrc] = useState(null);
     const [showImgSrc, setShowImgSrc] = useState(false);
-    const [shuffle, setShuffle] = useState(false);
-    const [songIndex, setSongIndex] = useState(0);
-    const [updateInterval, setUpdateInterval] = useState(120000);
-
-    const changeSong = (newSongURI) => {
-        const embedContainer = document.getElementById('spotify-iframe-container');
-        embedContainer.setAttribute('data-songURI', newSongURI)
-        setTimeout(() => {
-            const event = new CustomEvent("change-song");
-            document.dispatchEvent(event);
-        });
-    }
+    const [updateInterval, setUpdateInterval] = useState(300000);
 
     const updateMood = useCallback(async () => {
         const screenshotSrc = webcamRef.current.getScreenshot();
@@ -36,49 +30,20 @@ const Player = (props) => {
         }
         setImgSrc(screenshotSrc);
         const newMood = await predictScreenshot(screenshotSrc);
-
         if (!newMood) {
-            console.log("No face detected.")
             return;
         }
-        if (newMood === mood.value) {
-            return;
-        }
-        
-        const playlistSize = SONGS[newMood].length;
-        const newSongIndex = shuffle ? shuffleRandomNext(playlistSize) : 0;
-        changeSong(SONGS[newMood][songIndex]);
-        changeMood(newMood)
-        setSongIndex(newSongIndex);
-    }, [mood, shuffle, songIndex])
-
-    const handleNextSong = (event) => {
-        const playlistSize = SONGS[mood.value].length;
-        const nextSongIndex = shuffle ? 
-            shuffleRandomNext(playlistSize, songIndex) : 
-            (songIndex + 1) % playlistSize;
-        
-        changeSong(SONGS[mood.value][nextSongIndex]);
-        setSongIndex(nextSongIndex);
-    }
-
-    useEffect(() => {
-        document.addEventListener('next-song', handleNextSong);
-        return () => {
-            document.removeEventListener('next-song', handleNextSong)
-        };
-    }, [mood, shuffle, songIndex]);
+        // var emotionOptions = ["neutral", "tired", "happy", "sad", "angry", "surprise", "disgust", "fear"];
+        // const newMood = emotionOptions[Math.floor(Math.random() * emotionOptions.length)];
+        changeMood(newMood);
+    }, [])
 
     const intervalOptions = [
-        { label: '1 Minute', value: 60000 },
         { label: '2 Minutes', value: 120000 },
         { label: '5 Minutes', value: 300000 },
         { label: '15 Minutes', value: 900000 },
+        { label: '30 Minutes', value: 1800000 },
     ];
-
-    const handleIntervalChange = (event) => {
-        setUpdateInterval(event.target.value);
-    };
 
     useEffect(() => {
         const interval = setInterval(updateMood, updateInterval);
@@ -89,24 +54,23 @@ const Player = (props) => {
         <>
             <Header>MoodPlay</Header>
             <Header> Current Mood: {mood.display} </Header>
-
-            <button onClick={updateMood}>Update Mood!</button>
-            <button onClick={() => {setShowImgSrc(!showImgSrc)}}>
-                {showImgSrc ? "Hide" : "Show"} Screenshot Image
-            </button>
-            <button onClick={() => {setShuffle(!shuffle)}}>
-                {shuffle ? "Disable" : "Enable"} Shuffle
-            </button>
-            <div>
-                <label>
-                    Update mood every  
-                    <select value={updateInterval} onChange={handleIntervalChange}>
-                        {intervalOptions.map((option, index) => (
-                                <option value={option.value} key={index}>{option.label}</option>
-                        ))}
-                    </select>
-                </label>
-            </div>
+            <MoodSelect/>
+            <ButtonContainer>
+                <Button onClick={() => {setShuffle(!shuffle)}}>
+                        {shuffle ? "Disable" : "Enable"} Shuffle
+                </Button>
+                <Button onClick={updateMood}>Detect Mood!</Button>
+                <Button onClick={() => {setShowImgSrc(!showImgSrc)}}>
+                    {showImgSrc ? "Hide" : "Show"} Screenshot Image
+                </Button>
+            </ButtonContainer>
+            <SelectDropdown
+                options={intervalOptions}
+                state={updateInterval}
+                setState={setUpdateInterval}
+            >
+                Automatically detect your mood every:
+            </SelectDropdown>
             <Webcam
                 ref = {webcamRef}
                 audio = {false}
@@ -121,5 +85,4 @@ const Player = (props) => {
         </>
     );
 };
-
 export default Player;

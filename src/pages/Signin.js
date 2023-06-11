@@ -1,9 +1,10 @@
 import React from 'react';
+import Header from '../components/Header';
 
 const Signin = () => {
     return (
         <div>
-            <h1>Sign In</h1>
+            <Header>Sign In</Header>
         </div>
     );
 };
