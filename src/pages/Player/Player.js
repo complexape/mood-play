@@ -23,7 +23,7 @@ const Player = () => {
     const [moodLoading, setMoodLoading] = useState(false);
 
     const updateMood = useCallback(async () => {
-        if (!webcamRef.current) {
+        if (!webcamRef.current.canvas) {
             alert("No Webcam Found!");
             return;
         }
@@ -93,7 +93,7 @@ const Player = () => {
             </SelectDropdown>
             <WebcamDisplay
                 ref={webcamRef}
-                show={showWebcam ? 1 : 0}
+                show={showWebcam && webcamRef.current.canvas ? 1 : 0}
             />
         </>
     );
