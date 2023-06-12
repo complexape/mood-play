@@ -61,7 +61,13 @@ export const SONGS = {
         "https://open.spotify.com/track/4cOdK2wGLETKBW3PvgPWqT?si=575d065658134bbd"
     ],
     "disgust": [
-        "https://open.spotify.com/track/5ygDXis42ncn6kYG14lEVG?si=ec593d0d481b4b5f"
+        "https://open.spotify.com/track/4cOdK2wGLETKBW3PvgPWqT?si=575d065658134bbd",
+        "https://open.spotify.com/track/6foY66mWZN0pSRjZ408c00?si=59fde61bff2142ee",
+        "https://open.spotify.com/track/6iy4PoAuZBMvtrlDX4VxC7?si=9c079e8fa2254181",
+        "https://open.spotify.com/track/7mldq42yDuxiUNn08nvzHO?si=dd054965bd0e4edc",
+        "https://open.spotify.com/track/5KqldkCunQ2rWxruMEtGh0?si=1519a143807c4864",
+        "https://open.spotify.com/track/0i5el041vd6nxrGEU8QRxy?si=48b62f0363594f52",
+        "https://open.spotify.com/track/5kNe7PE09d6Kvw5pAsx23n?si=98f4d64e3e3f4925"
     ],
     "fear": [
         "https://open.spotify.com/track/4WJ7UMD4i6DOPzyXU5pZSz?si=05102f2293f04d66",

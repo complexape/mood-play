@@ -145,7 +145,7 @@ export const MoodContextProvider = ({ children }) => {
 
         const playlistSize = SONGS[newMood].length;
         const newSongIndex = shuffle ? shuffleRandomNext(playlistSize) : 0;
-        changeSong(SONGS[newMood][songIndex]);
+        changeSong(SONGS[newMood][newSongIndex]);
         setLastChanged(date.getTime());
         setMood(EMOTIONS[newMood]);
         setSongIndex(newSongIndex);
