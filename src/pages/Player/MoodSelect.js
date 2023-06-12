@@ -9,7 +9,7 @@ const Button = styled.button`
     margin: 20px 5px 20px 5px;
     transition: transform 0.3s ease-in-out;
     &:hover {
-        transform: scale(1.2);
+        ${(props) => (props.disabled ? '' : 'transform: scale(1.2);')};
     }
 
     &:disabled {

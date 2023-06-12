@@ -87,40 +87,53 @@ const extractFaceAndEyes = async (base64Image) => {
     return [faceBase64, leftEyeBase64, rightEyeBase64];
 }
 
-// returns emotion predicted or null if no face found
-export const predictScreenshot = async (screenshotSrc) => {
-    const base64Images = await extractFaceAndEyes(screenshotSrc);
-    if (!base64Images) {
-        return null;
-    }
-
-    const [faceData, leftEyeData, rightEyeData] = base64Images;
-    const responses = await Promise.all([
-        getEmotionPredictions(faceData),
-        getTiredPrediction(leftEyeData),
-        getTiredPrediction(rightEyeData)
-    ]);
-    const [emotionPredictions, leftEyePrediction, rightEyePrediction] = responses.map(
-        (response) => { return response.data; }
-    );
+export const predictScreenshots = async (screenshots) => {
+    let isTired = true;
+    let moodPredictions = {
+        "neutral": 1,
+        "happy": 1,
+        "sad": 1,
+        "angry": 1,
+        "surprise": 1,
+        "disgust": 1,
+        "fear": 1
+    };
+  
+    await Promise.all(
+        screenshots.map(async (screenshot) => {
+            const base64Images = await extractFaceAndEyes(screenshot);
+            if (!base64Images) {
+                return;
+            }
+            const [faceData, leftEyeData, rightEyeData] = base64Images;
     
-    console.log(faceData);
-    console.log(leftEyeData);
-    console.log(rightEyeData);
-    console.log(emotionPredictions);
-    console.log(leftEyePrediction);
-    console.log(rightEyePrediction);
+            const responses = await Promise.all([
+                getEmotionPredictions(faceData),
+                getTiredPrediction(leftEyeData),
+                getTiredPrediction(rightEyeData)
+            ]);
+            const [emotionPredictions, leftEyePrediction, rightEyePrediction] = responses.map(
+                (response) => response.data
+            );
+    
+            Object.entries(emotionPredictions).forEach(([emotion, value]) => {
+                moodPredictions[emotion] *= value;
+            });
+    
+            isTired &= leftEyePrediction["closed_eye"] > EYE_THRESHOLD;
+            isTired &= rightEyePrediction["closed_eye"] > EYE_THRESHOLD;
 
-    let [maxEmotion, maxValue] = ["", 0];
-    for (const [emotion, value] of Object.entries(emotionPredictions)) {
-        if (value > maxValue) {
-            maxValue = value;
+            console.log(emotionPredictions, leftEyePrediction, rightEyePrediction);
+        })
+    );
+        
+    let maxEmotion = "neutral";
+    Object.entries(moodPredictions).forEach(([emotion, pred]) => {
+        if (pred > moodPredictions[maxEmotion]) {
             maxEmotion = emotion;
         }
-    }
+    });
 
-    let isTired = leftEyePrediction["closed_eye"] > EYE_THRESHOLD;
-    isTired &= rightEyePrediction["closed_eye"] > EYE_THRESHOLD;
-
+    console.log("RESULT: ", moodPredictions, maxEmotion, isTired, screenshots[0]);
     return isTired ? "tired" : maxEmotion;
-}
+  };

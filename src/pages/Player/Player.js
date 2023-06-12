@@ -1,15 +1,15 @@
 import React, { useCallback, useRef, useState, useEffect, useContext } from 'react';
-import Webcam from 'react-webcam';
 
-import { predictScreenshot } from './PlayerUtils';
-import './Player.css';
+import { predictScreenshots } from './PlayerUtils';
 import Header from '../../components/Header';
 import { MoodContext } from '../../context/MoodContext';
 import { Button, ButtonContainer } from '../../components/Button';
 import SelectDropdown from '../../components/SelectDropdown';
 import MoodSelect from './MoodSelect';
+import WebcamDisplay from '../../components/WebcamDisplay';
+import { NUM_PHOTOS, PHOTOS_DELAY_MS } from '../../constants/DetectionConstants';
 
-const Player = (props) => {
+const Player = () => {
     const webcamRef = useRef(null)
     const {
         mood, 
@@ -18,24 +18,33 @@ const Player = (props) => {
         setShuffle, 
     } = useContext(MoodContext);
 
-    const [imgSrc, setImgSrc] = useState(null);
-    const [showImgSrc, setShowImgSrc] = useState(false);
+    const [showWebcam, setShowWebcam] = useState(false);
     const [updateInterval, setUpdateInterval] = useState(300000);
+    const [moodLoading, setMoodLoading] = useState(false);
 
     const updateMood = useCallback(async () => {
-        const screenshotSrc = webcamRef.current.getScreenshot();
-        if (!screenshotSrc) {
-            console.log("No webcam.")
+        if (!webcamRef.current) {
+            alert("No Webcam Found!");
             return;
         }
-        setImgSrc(screenshotSrc);
-        const newMood = await predictScreenshot(screenshotSrc);
-        if (!newMood) {
-            return;
+
+        const timer = ms => new Promise(res => setTimeout(res, ms))
+
+        setMoodLoading(true);
+        let screenshots = [];   
+        for (let i = 0; i < NUM_PHOTOS; i++) {
+            const screenshot = webcamRef.current.getScreenshot();
+            screenshots.push(screenshot);
+            await timer(PHOTOS_DELAY_MS);
         }
         // var emotionOptions = ["neutral", "tired", "happy", "sad", "angry", "surprise", "disgust", "fear"];
         // const newMood = emotionOptions[Math.floor(Math.random() * emotionOptions.length)];
-        changeMood(newMood);
+        const newMood = await predictScreenshots(screenshots);
+        console.log(newMood);
+        if (newMood) {
+            changeMood(newMood);
+        }
+        setMoodLoading(false);
     }, [])
 
     const intervalOptions = [
@@ -56,12 +65,23 @@ const Player = (props) => {
             <Header> Current Mood: {mood.display} </Header>
             <MoodSelect/>
             <ButtonContainer>
-                <Button onClick={() => {setShuffle(!shuffle)}}>
-                        {shuffle ? "Disable" : "Enable"} Shuffle
+                <Button 
+                    onClick={() => {setShuffle(!shuffle)}}
+                    toggle={shuffle ? 1 : 0}
+                >
+                    Shuffle: {shuffle ? "✔️" : "❌"}
                 </Button>
-                <Button onClick={updateMood}>Detect Mood!</Button>
-                <Button onClick={() => {setShowImgSrc(!showImgSrc)}}>
-                    {showImgSrc ? "Hide" : "Show"} Screenshot Image
+                <Button 
+                    onClick={updateMood} 
+                    buttonDisabled={moodLoading}
+                >
+                    {moodLoading ? <i className="fa fa-refresh fa-spin"></i> : "Detect Mood!"}
+                </Button>
+                <Button 
+                    onClick={() => {setShowWebcam(!showWebcam)}}
+                    toggle={showWebcam ? 1 : 0}
+                >
+                    {showWebcam ? "Hide" : "Show"} Webcam
                 </Button>
             </ButtonContainer>
             <SelectDropdown
@@ -71,18 +91,12 @@ const Player = (props) => {
             >
                 Automatically detect your mood every:
             </SelectDropdown>
-            <Webcam
-                ref = {webcamRef}
-                audio = {false}
-                screenshotFormat='image/jpeg'
-                onUserMedia={(e) => { console.log(e); }}
+            <WebcamDisplay
+                ref={webcamRef}
+                show={showWebcam ? 1 : 0}
             />
-            {imgSrc && showImgSrc && (
-                <div>
-                    <img src={imgSrc} alt="Screenshot"/>
-                </div>
-            )}
         </>
     );
 };
+
 export default Player;

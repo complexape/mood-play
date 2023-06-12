@@ -33,6 +33,7 @@ const SpotifyIFrameContainer = () => {
             show={useMatch('/')}
         >
             <div id="spotify-iframe">
+                Refresh the window!
             </div>
         </StyledDiv>
     )

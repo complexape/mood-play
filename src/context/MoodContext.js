@@ -56,7 +56,7 @@ export const EMOTIONS = {
     },
     "disgust": {
         value: "disgust",
-        display: "Disgust 🤢",
+        display: "Disgusted 🤢",
         primaryColor: "#086375",
         secondaryColor: "#BFAE48",
         waveColorA: "rgba(54, 5, 104, 0.3)",
@@ -66,7 +66,7 @@ export const EMOTIONS = {
     },
     "fear": {
         value: "fear",
-        display: "Fear 😨",
+        display: "Afraid 😨",
         primaryColor: "#897C80",
         secondaryColor: "#7C8985",
         waveColorA: "rgba(115, 0, 113, 0.3)",
@@ -76,7 +76,7 @@ export const EMOTIONS = {
     },
     "surprise": {
         value: "surprise",
-        display: "Surprise 😮",
+        display: "Surprised 😮",
         primaryColor: "#C5D86D",
         secondaryColor: "#806DD8",
         waveColorA: "rgba(247, 86, 124, 0.3)",
@@ -85,6 +85,8 @@ export const EMOTIONS = {
         textColor: "#1B1F3B"
     },
 }
+
+const DEFAULT_MOOD = "neutral";
 
 const GradientDiv = styled.div`
     position: fixed;
@@ -95,7 +97,7 @@ const GradientDiv = styled.div`
     background-image: linear-gradient(45deg, ${(props) => props.mood.primaryColor} 20%, ${(props) => props.mood.secondaryColor});
     background-size: cover;
     background-attachment: fixed;
-    opacity: 0;
+    opacity: ${(props) => (props.mood.value === DEFAULT_MOOD) ? 1 : 0};
     transition: all 1.5s ease;
     -webkit-transition: all 1.5s ease;
     -webkit-transition: all 1.5s ease;
@@ -110,8 +112,6 @@ const shuffleRandomNext = (size, exc = -1) => {
     return ret;
 }
 
-export const MoodContext = createContext(EMOTIONS['neutral']);
-
 const changeSong = (newSongURI) => {
     const embedContainer = document.getElementById('spotify-iframe-container');
     embedContainer.setAttribute('data-songURI', newSongURI)
@@ -121,8 +121,10 @@ const changeSong = (newSongURI) => {
     });
 }
 
+export const MoodContext = createContext(null);
+
 export const MoodContextProvider = ({ children }) => {
-    const [mood, setMood] = useState(EMOTIONS['neutral']);
+    const [mood, setMood] = useState(EMOTIONS[DEFAULT_MOOD]);
     const [lastChanged, setLastChanged] = useState(0);
 
     const [shuffle, setShuffle] = useState(false);
@@ -132,9 +134,17 @@ export const MoodContextProvider = ({ children }) => {
         const date = new Date();
         const timeDiffSeconds = (date.getTime() - lastChanged) / 1000;
         if (timeDiffSeconds < COOLDOWN_SECONDS) {
-            alert(`Mood Update Cooldown: Please try again in ${Math.ceil(COOLDOWN_SECONDS - timeDiffSeconds)} seconds!`)
+            alert(`Cooldown: Please try again in ${Math.ceil(COOLDOWN_SECONDS - timeDiffSeconds)} seconds!`)
             return;
         }
+        if (newMood === mood.value) {
+            return;
+        }
+
+        Object.values(EMOTIONS).map((mood) => {
+            const gradientDiv = document.getElementById(`gradient-div-${mood.value}`)
+            gradientDiv.style.opacity = (mood.value === newMood) ? 1 : 0;  
+        })
 
         const playlistSize = SONGS[newMood].length;
         const newSongIndex = shuffle ? shuffleRandomNext(playlistSize) : 0;
@@ -143,13 +153,6 @@ export const MoodContextProvider = ({ children }) => {
         setMood(EMOTIONS[newMood]);
         setSongIndex(newSongIndex);
     }
-
-    useEffect(() => {
-        Object.values(EMOTIONS).map((emotion) => {
-            const gradientDiv = document.getElementById(`gradient-div-${emotion.value}`)
-            gradientDiv.style.opacity = emotion.value === mood.value ? 1 : 0;  
-        })
-    }, [mood]);
 
     useEffect(() => {
         const handleNextSong = (event) => {
