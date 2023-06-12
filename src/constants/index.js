@@ -2,7 +2,7 @@ export const EMOTION_URL = "https://mood-detection-api.vercel.app/api/predict-em
 export const TIRED_URL = "https://mood-detection-api.vercel.app/api/predict-tired";
 
 // INCREASE IN PROD
-export const COOLDOWN_SECONDS = 5;
+export const COOLDOWN_SECONDS = 10;
 
 export const DEFAULT_SONG = "https://open.spotify.com/track/5BZ4aodJTESrcaGQERLzjV?si=535c34478d434568";
 
@@ -11,8 +11,8 @@ export const SONGS = {
         "https://open.spotify.com/track/5BZ4aodJTESrcaGQERLzjV?si=535c34478d434568",
         "https://open.spotify.com/track/1U8tjMoPRPAkNkunfH5OxD?si=48bb550e4bf14f89",
         "https://open.spotify.com/track/1AwXvRDkuXRmXgzxLW10lX?si=a449504d791e4b51",
-        "https://open.spotify.com/track/2e9yeE2PQKcoI6sjQluikp?si=d86418e0e2114539",
-        "https://open.spotify.com/track/15NLkG6HRxgsHP1wtqH84X?si=e456f6dde612447e",
+        "https://open.spotify.com/track/3TEb0AU6wup3IrWp9CPc1v?si=a2b873050f5b4043",
+        "https://open.spotify.com/track/4Vi2qeM4UPviTzuKohUIr3?si=7d7445130e8543d6",
         "https://open.spotify.com/track/1hIokS8624s7tpeZuWclRK?si=8160d56c74a14a2f",
         "https://open.spotify.com/track/4kC81FbJoMaD3Fr0kLEzHr?si=c3cbe7d35cec4202",
         "https://open.spotify.com/track/1rp1RDGaMNXbDoKZDVEQHc?si=c2f0d2b2eab2448e"
@@ -28,23 +28,23 @@ export const SONGS = {
         "https://open.spotify.com/track/38DgNqC7TQkZ3Ih5Vz6K0Q?si=ee55c328c57f4e21"
     ],
     "tired": [
+        "https://open.spotify.com/track/2Cz4rYup2tiEdyGX0IWnH7?si=6f4cc5d262284f90",
         "https://open.spotify.com/track/7gqe2hMeAKoxif1jrPihCv?si=d4302cc96d5f4dad",
         "https://open.spotify.com/track/2bQr2fVvAnyq5Wg7l1xkhW?si=35708c396619405f",
         "https://open.spotify.com/track/2tTam1DLtJL6hqFd4JIBTu?si=6c2155c9b5604e37",
         "https://open.spotify.com/track/4S2KNfRivsduJPWI52oJVf?si=a1bca34ba58645ab",
         "https://open.spotify.com/track/4T7oDgtpVj7mvGseuU7nyA?si=7986c7444b8f4016",
         "https://open.spotify.com/track/4bPJW9pNtuvMujHnbxEN1g?si=d143da95d1ce44de",
-        "https://open.spotify.com/track/1KohJWIWwDDw7mBxs2wv90?si=29563100a1834740",
-        "https://open.spotify.com/track/2Cz4rYup2tiEdyGX0IWnH7?si=6f4cc5d262284f90"
+        "https://open.spotify.com/track/1KohJWIWwDDw7mBxs2wv90?si=29563100a1834740"
     ], 
     "sad": [
+        "https://open.spotify.com/track/13NC44aS3d0EFF58oVQ8T7?si=6926583e5caf4f1c",
         "https://open.spotify.com/track/3U4isOIWM3VvDubwSI3y7a?si=aab1c4ba3f884118",
         "https://open.spotify.com/track/0u2P5u6lvoDfwTYjAADbn4?si=e43a25f7e4b34438",
         "https://open.spotify.com/track/0VQjTLPG8l3egUHmIxe265?si=c64c8d072dad48ba",
         "https://open.spotify.com/track/6xGruZOHLs39ZbVccQTuPZ?si=e9b7fbfb7ff54adf",
         "https://open.spotify.com/track/74eJR4gwG1ZmG4BFkbrOlA?si=4bf8b91b9dc2453a",
         "https://open.spotify.com/track/5uCax9HTNlzGybIStD3vDh?si=c6da1ecd0c7f4e3e",
-        "https://open.spotify.com/track/13NC44aS3d0EFF58oVQ8T7?si=6926583e5caf4f1c",
         "https://open.spotify.com/track/4JehYebiI9JE8sR8MisGVb?si=5c415531bc1b4da7"
     ],
     "angry": [
@@ -61,9 +61,14 @@ export const SONGS = {
         "https://open.spotify.com/track/4cOdK2wGLETKBW3PvgPWqT?si=575d065658134bbd"
     ],
     "disgust": [
-        "https://open.spotify.com/album/13GSfOTgzZjwp8JhmxgZr0?si=554f8e6a536f43be"
+        "https://open.spotify.com/track/5ygDXis42ncn6kYG14lEVG?si=ec593d0d481b4b5f"
     ],
     "fear": [
-        "https://open.spotify.com/track/1IN3RLkUXvVaBeI4BwyVUw?si=6cf2dae49091408e"
+        "https://open.spotify.com/track/4WJ7UMD4i6DOPzyXU5pZSz?si=05102f2293f04d66",
+        "https://open.spotify.com/track/1UvaZaHkh3D9AkmBrrnbFg?si=d0e10249d3704ccb",
+        "https://open.spotify.com/artist/5zCaQxjl110XTrm4LQ1CxY?si=782271624fc84e95",
+        "https://open.spotify.com/track/1cd7Pft3rfZ0hmaOLI0EDB?si=3999c8db5f0d4619",
+        "https://open.spotify.com/track/4gaWbVsdmvsNHktWWg9qcq?si=a023737c76cf45f2",
+        "https://open.spotify.com/track/0kdhTbVFVusJcBm4bWjrKm?si=cc830e9b59774dfd"
     ]
 };

@@ -18,7 +18,7 @@ const Player = () => {
         setShuffle, 
     } = useContext(MoodContext);
 
-    const [showWebcam, setShowWebcam] = useState(true);
+    const [showWebcam, setShowWebcam] = useState(false);
     const [updateInterval, setUpdateInterval] = useState(300000);
     const [moodLoading, setMoodLoading] = useState(false);
 

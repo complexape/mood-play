@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components';
 import { useMatch } from 'react-router-dom';
 
@@ -10,23 +10,6 @@ const StyledDiv = styled.div`
 `;
 
 const SpotifyIFrameContainer = () => {
-
-    // reload page to load spotify iframe if no iframe is found
-    useEffect(() => {
-        const container = document.getElementById("spotify-iframe-container" );
-        if (container.querySelector("#spotify-iframe")) {
-            const timer = setTimeout(() => {
-                if (container.querySelector("#spotify-iframe")) {
-                    window.location.reload();
-                }
-            }, 5000);
-
-            return () => {
-                clearTimeout(timer);
-            };
-        }
-    }, [])
-
     return (
         <StyledDiv 
             id="spotify-iframe-container" 

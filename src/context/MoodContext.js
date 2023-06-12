@@ -137,9 +137,6 @@ export const MoodContextProvider = ({ children }) => {
             alert(`Cooldown: Please try again in ${Math.ceil(COOLDOWN_SECONDS - timeDiffSeconds)} seconds!`)
             return;
         }
-        if (newMood === mood.value) {
-            return;
-        }
 
         Object.values(EMOTIONS).map((mood) => {
             const gradientDiv = document.getElementById(`gradient-div-${mood.value}`)
