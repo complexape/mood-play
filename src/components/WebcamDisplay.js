@@ -5,7 +5,14 @@ import styled from 'styled-components';
 
 const StyledWebcam = styled(Webcam)`
     ${(props) => (props.show ? 
-        'position flex; border: red;':
+        `
+            outline:none; 
+            border: 5px solid #555555; 
+            display: block; 
+            margin: 10px auto; 
+            max-height: 50vw;
+            max-width: 80vw;
+        `:
         'position: absolute; right: 99.999%;'
     )}
 `;

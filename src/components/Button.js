@@ -29,6 +29,7 @@ export const ButtonContainer = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: center;
+    flex-wrap: wrap;
 `;
 
 export const Button = ({ onClick, toggle, children, buttonDisabled }) => {

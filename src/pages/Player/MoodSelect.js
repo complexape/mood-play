@@ -21,6 +21,7 @@ const Div = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: center;
+    flex-wrap: wrap;
     transition: all 1.5s ease;
     -webkit-transition: all 1.5s ease;
     -webkit-transition: all 1.5s ease;
