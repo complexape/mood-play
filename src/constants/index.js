@@ -61,7 +61,6 @@ export const SONGS = {
         "https://open.spotify.com/track/4cOdK2wGLETKBW3PvgPWqT?si=575d065658134bbd"
     ],
     "disgust": [
-        "https://open.spotify.com/track/4cOdK2wGLETKBW3PvgPWqT?si=575d065658134bbd",
         "https://open.spotify.com/track/6foY66mWZN0pSRjZ408c00?si=59fde61bff2142ee",
         "https://open.spotify.com/track/6iy4PoAuZBMvtrlDX4VxC7?si=9c079e8fa2254181",
         "https://open.spotify.com/track/7mldq42yDuxiUNn08nvzHO?si=dd054965bd0e4edc",
