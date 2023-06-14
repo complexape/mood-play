@@ -4,8 +4,9 @@ MoodPlay is an interactive music player web app made using React that changes mu
 
 (Currently still WIP)
 
+A demo of the project can be found here: https://mood-play.netlify.app/
 
-### Setup
+### Local Setup
 Clone the repository, navigate to the folder, then run:
 ```
 npm i
