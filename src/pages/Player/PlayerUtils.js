@@ -99,33 +99,29 @@ export const predictScreenshots = async (screenshots) => {
         "fear": 1
     };
   
-    await Promise.all(
-        screenshots.map(async (screenshot) => {
-            const base64Images = await extractFaceAndEyes(screenshot);
-            if (!base64Images) {
-                return;
-            }
-            const [faceData, leftEyeData, rightEyeData] = base64Images;
-    
-            const responses = await Promise.all([
-                getEmotionPredictions(faceData),
-                getTiredPrediction(leftEyeData),
-                getTiredPrediction(rightEyeData)
-            ]);
-            const [emotionPredictions, leftEyePrediction, rightEyePrediction] = responses.map(
-                (response) => response.data
-            );
-    
-            Object.entries(emotionPredictions).forEach(([emotion, value]) => {
-                moodPredictions[emotion] *= value;
-            });
-    
-            isTired &= leftEyePrediction["closed_eye"] > EYE_THRESHOLD;
-            isTired &= rightEyePrediction["closed_eye"] > EYE_THRESHOLD;
+    await Promise.all(screenshots.map(async (screenshot) => {
+        const base64Images = await extractFaceAndEyes(screenshot);
+        if (!base64Images) {
+            return;
+        }
+        const [faceData, leftEyeData, rightEyeData] = base64Images;
 
-            console.log(emotionPredictions, leftEyePrediction, rightEyePrediction);
-        })
-    );
+        const responses = await Promise.all([
+            getEmotionPredictions(faceData),
+            getTiredPrediction(leftEyeData),
+            getTiredPrediction(rightEyeData)
+        ]);
+        const [emotionPredictions, leftEyePrediction, rightEyePrediction] = responses.map(
+            (response) => response.data
+        );
+
+        Object.entries(emotionPredictions).forEach(([emotion, value]) => {
+            moodPredictions[emotion] *= value;
+        });
+
+        isTired &= leftEyePrediction["closed_eye"] > EYE_THRESHOLD;
+        isTired &= rightEyePrediction["closed_eye"] > EYE_THRESHOLD;
+    }));
         
     let maxEmotion = "neutral";
     Object.entries(moodPredictions).forEach(([emotion, pred]) => {
@@ -134,6 +130,5 @@ export const predictScreenshots = async (screenshots) => {
         }
     });
 
-    console.log("RESULT: ", moodPredictions, maxEmotion, isTired, screenshots[0]);
     return isTired ? "tired" : maxEmotion;
   };

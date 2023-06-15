@@ -12,7 +12,8 @@ export const EMOTIONS = {
         waveColorA: "rgba(153, 50, 204, 0.3)",
         waveColorB: "rgba(30, 144, 225, 0.3)",
         waveColorC: "rgba(220, 20, 60, 0.3)",
-        textColor: "#1B1F3B"
+        textColor: "#1B1F3B",
+        textColorAlt: "#FFFFF2",
     },
     "tired": {
         value: "tired",
@@ -22,17 +23,19 @@ export const EMOTIONS = {
         waveColorA: "rgba(124, 152, 179, 0.3)",
         waveColorB: "rgba(172, 203, 225, 0.3)",
         waveColorC: "rgba(206, 229, 242, 0.3)",
-        textColor: "#FFFFF2"
+        textColor: "#FFFFF2",
+        textColorAlt: "#1B1F3B",
     },
     "happy": {
         value: "happy",
         display: "Happy 😃",
         primaryColor: "#FEC601",
         secondaryColor: "#D11149",
-        waveColorA: "rgba(64, 31, 62, 0.3)",
-        waveColorB: "rgba(63, 46, 86, 0.3)",
-        waveColorC: "rgba(69, 63, 120, 0.3)",
-        textColor: "#1B1F3B"
+        waveColorA: "rgba(238, 171, 196, 0.3)",
+        waveColorB: "rgba(199, 153, 166, 0.3)",
+        waveColorC: "rgba(75, 40, 64, 0.3)",
+        textColor: "#1B1F3B",
+        textColorAlt: "#FFFFF2"
     },
     "sad": {
         value: "sad",
@@ -42,7 +45,8 @@ export const EMOTIONS = {
         waveColorA: "rgba(154, 152, 181, 0.3)",
         waveColorB: "rgba(160, 185, 198, 0.3)",
         waveColorC: "rgba(165, 248, 211, 0.3)",
-        textColor: "#FFFFF2"
+        textColor: "#FFFFF2",
+        textColorAlt: "#1B1F3B",
     },
     "angry": {
         value: "angry",
@@ -52,7 +56,8 @@ export const EMOTIONS = {
         waveColorA: "rgba(54, 17, 52, 0.3)",
         waveColorB: "rgba(243, 145, 160, 0.3)",
         waveColorC: "rgba(237, 230, 242, 0.3)",
-        textColor: "#FFFFF2"
+        textColor: "#FFFFF2",
+        textColorAlt: "#1B1F3B",
     },
     "disgust": {
         value: "disgust",
@@ -62,7 +67,8 @@ export const EMOTIONS = {
         waveColorA: "rgba(54, 5, 104, 0.3)",
         waveColorB: "rgba(230, 52, 98, 0.3)",
         waveColorC: "rgba(254, 95, 85, 0.3)",
-        textColor: "#FFFFF2"
+        textColor: "#FFFFF2",
+        textColorAlt: "#1B1F3B",
     },
     "fear": {
         value: "fear",
@@ -72,7 +78,8 @@ export const EMOTIONS = {
         waveColorA: "rgba(115, 0, 113, 0.3)",
         waveColorB: "rgba(25, 25, 35, 0.3)",
         waveColorC: "rgba(251, 254, 249, 0.3)",
-        textColor: "#1B1F3B"
+        textColor: "#1B1F3B",
+        textColorAlt: "#FFFFF2",
     },
     "surprise": {
         value: "surprise",
@@ -82,7 +89,8 @@ export const EMOTIONS = {
         waveColorA: "rgba(247, 86, 124, 0.3)",
         waveColorB: "rgba(37, 161, 142, 0.3)",
         waveColorC: "rgba(16, 37, 66, 0.3)",
-        textColor: "#1B1F3B"
+        textColor: "#1B1F3B",
+        textColorAlt: "#FFFFF2",
     },
 }
 

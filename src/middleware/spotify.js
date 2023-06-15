@@ -8,6 +8,8 @@ window.onSpotifyIframeApiReady = (IFrameAPI) => {
         uri: DEFAULT_SONG
     };
 
+    // ** The Spotify IFrame Embed shows songs as preview if you're
+    // not logged into spotify on your browser **
     const callback = (EmbedController) => {
         const handleNextSong = () => {
             const embedContainer = document.getElementById('spotify-iframe-container');

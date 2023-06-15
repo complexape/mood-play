@@ -14,7 +14,7 @@ function App() {
     return (
         <div className={`app-container`}>
             <MoodContextProvider>
-                {/* <Navbar /> */}
+                <Navbar />
                 <Wave />
                 <Routes>
                     <Route path='/' element={<Player/>} />

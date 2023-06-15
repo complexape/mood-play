@@ -1,31 +1,44 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { useLocation } from 'react-router-dom';
 import {
-  Nav,
-  NavLink,
-  Bars,
-  NavMenu,
-  NavBtn,
-  NavBtnLink,
+    NavbarContainer,
+    Logo,
+    RoutesContainer,
+    RouteLink
 } from './NavbarElements';
+import { MoodContext } from '../../context/MoodContext';
 
 const Navbar = () => {
-    return (
-        <Nav>
-            <Bars />
+    const location = useLocation();
+    const { mood } = useContext(MoodContext);
 
-            <NavMenu>
-                <NavLink to='/'>
-                    MoodPlay
-                </NavLink>
-                <NavLink to='/settings'>
-                    Settings
-                </NavLink>
-            </NavMenu>
-            <NavBtn>
-                <NavBtnLink to='/sign-in'>Sign In</NavBtnLink>
-            </NavBtn>
-        </Nav>
+    return (
+        <NavbarContainer >
+            <Logo mood={mood} to='/'>MoodPlay</Logo>
+            <RoutesContainer>
+                <RouteLink 
+                    to='/' 
+                    isActive={location.pathname === '/'}
+                    mood={mood}
+                >
+                    Player
+                </RouteLink>
+                <RouteLink 
+                    to='/settings' 
+                    isActive={location.pathname === '/settings'}
+                    mood={mood}
+                >Settings
+                </RouteLink>
+                <RouteLink 
+                    to='/sign-in' 
+                    isActive={location.pathname === '/sign-in'}
+                    mood={mood}
+                >
+                    Sign In to Spotify
+                </RouteLink>
+            </RoutesContainer>
+        </NavbarContainer>
     );
 };
-
+  
 export default Navbar;

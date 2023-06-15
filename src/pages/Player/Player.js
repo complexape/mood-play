@@ -23,7 +23,7 @@ const Player = () => {
     const [moodLoading, setMoodLoading] = useState(false);
 
     const updateMood = useCallback(async () => {
-        if (!webcamRef.current.canvas) {
+        if (!webcamRef.current.state.hasUserMedia) {
             alert("No Webcam Found!");
             return;
         }
@@ -40,7 +40,6 @@ const Player = () => {
         // var emotionOptions = ["neutral", "tired", "happy", "sad", "angry", "surprise", "disgust", "fear"];
         // const newMood = emotionOptions[Math.floor(Math.random() * emotionOptions.length)];
         const newMood = await predictScreenshots(screenshots);
-        console.log(newMood);
         if (newMood) {
             changeMood(newMood);
         }
@@ -61,7 +60,6 @@ const Player = () => {
 
     return (
         <>
-            <Header>MoodPlay</Header>
             <Header> Current Mood: {mood.display} </Header>
             <MoodSelect/>
             <ButtonContainer>
@@ -93,7 +91,7 @@ const Player = () => {
             </SelectDropdown>
             <WebcamDisplay
                 ref={webcamRef}
-                show={showWebcam && webcamRef.current.canvas ? 1 : 0}
+                show={showWebcam && webcamRef.current.state.hasUserMedia ? 1 : 0}
             />
         </>
     );
