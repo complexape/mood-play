@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { useLocation } from 'react-router-dom';
+import 'react-spotify-auth/dist/index.css'
 import {
     NavbarContainer,
     Logo,

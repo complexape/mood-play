@@ -10,11 +10,11 @@ const StyledHeader = styled.h1`
     -webkit-transition: all 1.5s ease;
 `;
 
-const Header = ({ children }) => {
+const Header = ({ children, fontSize }) => {
     const { mood } = useContext(MoodContext);
 
     return (
-        <StyledHeader mood={mood}>
+        <StyledHeader mood={mood} fontSize={fontSize}>
             {children}
         </StyledHeader>
     );

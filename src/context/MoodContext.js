@@ -1,7 +1,7 @@
 import React, {createContext, useEffect, useState} from 'react'
 import styled from 'styled-components';
 import { COOLDOWN_SECONDS } from '../constants';
-import { SONGS } from '../constants';
+import { DEFAULT_PLAYLISTS } from '../constants';
 
 export const EMOTIONS = {
     "neutral": {
@@ -151,9 +151,9 @@ export const MoodContextProvider = ({ children }) => {
             gradientDiv.style.opacity = (mood.value === newMood) ? 1 : 0;  
         })
 
-        const playlistSize = SONGS[newMood].length;
+        const playlistSize = DEFAULT_PLAYLISTS[newMood].length;
         const newSongIndex = shuffle ? shuffleRandomNext(playlistSize) : 0;
-        changeSong(SONGS[newMood][newSongIndex]);
+        changeSong(DEFAULT_PLAYLISTS[newMood][newSongIndex]);
         setLastChanged(date.getTime());
         setMood(EMOTIONS[newMood]);
         setSongIndex(newSongIndex);
@@ -161,12 +161,12 @@ export const MoodContextProvider = ({ children }) => {
 
     useEffect(() => {
         const handleNextSong = (event) => {
-            const playlistSize = SONGS[mood.value].length;
+            const playlistSize = DEFAULT_PLAYLISTS[mood.value].length;
             const nextSongIndex = shuffle ? 
                 shuffleRandomNext(playlistSize, songIndex) : 
                 (songIndex + 1) % playlistSize;
             
-            changeSong(SONGS[mood.value][nextSongIndex]);
+            changeSong(DEFAULT_PLAYLISTS[mood.value][nextSongIndex]);
             setSongIndex(nextSongIndex);
         }
 

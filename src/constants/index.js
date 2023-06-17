@@ -6,7 +6,7 @@ export const COOLDOWN_SECONDS = 1;
 
 export const DEFAULT_SONG = "https://open.spotify.com/track/5BZ4aodJTESrcaGQERLzjV?si=535c34478d434568";
 
-export const SONGS = {
+export const DEFAULT_PLAYLISTS = {
     "neutral": [
         "https://open.spotify.com/track/5BZ4aodJTESrcaGQERLzjV?si=535c34478d434568",
         "https://open.spotify.com/track/1U8tjMoPRPAkNkunfH5OxD?si=48bb550e4bf14f89",
