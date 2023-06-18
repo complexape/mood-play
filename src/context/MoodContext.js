@@ -1,7 +1,8 @@
-import React, {createContext, useEffect, useState} from 'react'
+import React, {createContext, useContext, useEffect, useState} from 'react'
 import styled from 'styled-components';
 import { COOLDOWN_SECONDS } from '../constants';
-import { DEFAULT_PLAYLISTS } from '../constants';
+import { playlists } from '../constants';
+import { SpotifyAuthContext } from './SpotifyAuthContext';
 
 export const EMOTIONS = {
     "neutral": {
@@ -132,6 +133,8 @@ const changeSong = (newSongURI) => {
 export const MoodContext = createContext(null);
 
 export const MoodContextProvider = ({ children }) => {
+    const { playlists } = useContext(SpotifyAuthContext);
+
     const [mood, setMood] = useState(EMOTIONS[DEFAULT_MOOD]);
     const [lastChanged, setLastChanged] = useState(0);
 
@@ -151,9 +154,9 @@ export const MoodContextProvider = ({ children }) => {
             gradientDiv.style.opacity = (mood.value === newMood) ? 1 : 0;  
         })
 
-        const playlistSize = DEFAULT_PLAYLISTS[newMood].length;
+        const playlistSize = playlists[newMood].songs.length;
         const newSongIndex = shuffle ? shuffleRandomNext(playlistSize) : 0;
-        changeSong(DEFAULT_PLAYLISTS[newMood][newSongIndex]);
+        changeSong(playlists[newMood].songs[newSongIndex]);
         setLastChanged(date.getTime());
         setMood(EMOTIONS[newMood]);
         setSongIndex(newSongIndex);
@@ -161,12 +164,12 @@ export const MoodContextProvider = ({ children }) => {
 
     useEffect(() => {
         const handleNextSong = (event) => {
-            const playlistSize = DEFAULT_PLAYLISTS[mood.value].length;
+            const playlistSize = playlists[mood.value].songs.length;
             const nextSongIndex = shuffle ? 
                 shuffleRandomNext(playlistSize, songIndex) : 
                 (songIndex + 1) % playlistSize;
             
-            changeSong(DEFAULT_PLAYLISTS[mood.value][nextSongIndex]);
+            changeSong(playlists[mood.value].songs[nextSongIndex]);
             setSongIndex(nextSongIndex);
         }
 

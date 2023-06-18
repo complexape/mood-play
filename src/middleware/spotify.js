@@ -1,3 +1,4 @@
+import Cookies from "js-cookie";
 import { DEFAULT_SONG } from "../constants";
 
 window.onSpotifyIframeApiReady = (IFrameAPI) => {
@@ -5,7 +6,7 @@ window.onSpotifyIframeApiReady = (IFrameAPI) => {
     const options = {
         width: '80%',
         height: '300',
-        uri: DEFAULT_SONG
+        uri: DEFAULT_SONG || Cookies.get('defaultSong')
     };
 
     // ** The Spotify IFrame Embed shows songs as preview if you're
