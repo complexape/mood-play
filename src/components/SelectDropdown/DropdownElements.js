@@ -14,7 +14,7 @@ export const Select = styled.select`
     background: white;
     color: gray;
     padding-left: 4px;
-    font-size: 14px;
+    font-size: 16px;
     border: none;
     margin-left: 10px;
 `;
