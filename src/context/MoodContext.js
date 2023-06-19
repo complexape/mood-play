@@ -1,99 +1,8 @@
 import React, {createContext, useContext, useEffect, useState} from 'react'
 import styled from 'styled-components';
-import { COOLDOWN_SECONDS } from '../constants';
-import { playlists } from '../constants';
+import { COOLDOWN_SECONDS, EMOTIONS } from '../constants';
 import { SpotifyAuthContext } from './SpotifyAuthContext';
-
-export const EMOTIONS = {
-    "neutral": {
-        value: "neutral",
-        display: "Neutral 😶",
-        primaryColor: "#E1BBC9",
-        secondaryColor: "#BBE1D3",
-        waveColorA: "rgba(153, 50, 204, 0.3)",
-        waveColorB: "rgba(30, 144, 225, 0.3)",
-        waveColorC: "rgba(220, 20, 60, 0.3)",
-        textColor: "#1B1F3B",
-        textColorAlt: "#FFFFF2",
-    },
-    "tired": {
-        value: "tired",
-        display: "Tired 😴",
-        primaryColor: "#191D32",
-        secondaryColor: "#322E19",
-        waveColorA: "rgba(124, 152, 179, 0.3)",
-        waveColorB: "rgba(172, 203, 225, 0.3)",
-        waveColorC: "rgba(206, 229, 242, 0.3)",
-        textColor: "#FFFFF2",
-        textColorAlt: "#1B1F3B",
-    },
-    "happy": {
-        value: "happy",
-        display: "Happy 😃",
-        primaryColor: "#FEC601",
-        secondaryColor: "#D11149",
-        waveColorA: "rgba(238, 171, 196, 0.3)",
-        waveColorB: "rgba(199, 153, 166, 0.3)",
-        waveColorC: "rgba(75, 40, 64, 0.3)",
-        textColor: "#1B1F3B",
-        textColorAlt: "#FFFFF2"
-    },
-    "sad": {
-        value: "sad",
-        display: "Sad 😔",
-        primaryColor: "#4E4C67",
-        secondaryColor: "#65674C",
-        waveColorA: "rgba(154, 152, 181, 0.3)",
-        waveColorB: "rgba(160, 185, 198, 0.3)",
-        waveColorC: "rgba(165, 248, 211, 0.3)",
-        textColor: "#FFFFF2",
-        textColorAlt: "#1B1F3B",
-    },
-    "angry": {
-        value: "angry",
-        display: "Angry 😠",
-        primaryColor: "#A62329",
-        secondaryColor: "#E5F77D",
-        waveColorA: "rgba(54, 17, 52, 0.3)",
-        waveColorB: "rgba(243, 145, 160, 0.3)",
-        waveColorC: "rgba(237, 230, 242, 0.3)",
-        textColor: "#FFFFF2",
-        textColorAlt: "#1B1F3B",
-    },
-    "disgust": {
-        value: "disgust",
-        display: "Disgusted 🤢",
-        primaryColor: "#086375",
-        secondaryColor: "#BFAE48",
-        waveColorA: "rgba(54, 5, 104, 0.3)",
-        waveColorB: "rgba(230, 52, 98, 0.3)",
-        waveColorC: "rgba(254, 95, 85, 0.3)",
-        textColor: "#FFFFF2",
-        textColorAlt: "#1B1F3B",
-    },
-    "fear": {
-        value: "fear",
-        display: "Afraid 😨",
-        primaryColor: "#897C80",
-        secondaryColor: "#7C8985",
-        waveColorA: "rgba(115, 0, 113, 0.3)",
-        waveColorB: "rgba(25, 25, 35, 0.3)",
-        waveColorC: "rgba(251, 254, 249, 0.3)",
-        textColor: "#1B1F3B",
-        textColorAlt: "#FFFFF2",
-    },
-    "surprise": {
-        value: "surprise",
-        display: "Surprised 😮",
-        primaryColor: "#C5D86D",
-        secondaryColor: "#806DD8",
-        waveColorA: "rgba(247, 86, 124, 0.3)",
-        waveColorB: "rgba(37, 161, 142, 0.3)",
-        waveColorC: "rgba(16, 37, 66, 0.3)",
-        textColor: "#1B1F3B",
-        textColorAlt: "#FFFFF2",
-    },
-}
+import { changeSong } from '../middleware/spotify';
 
 const DEFAULT_MOOD = "neutral";
 
@@ -119,15 +28,6 @@ const shuffleRandomNext = (size, exc = -1) => {
         ret = Math.floor(Math.random() * size);
     }
     return ret;
-}
-
-const changeSong = (newSongURI) => {
-    const embedContainer = document.getElementById('spotify-iframe-container');
-    embedContainer.setAttribute('data-songURI', newSongURI)
-    setTimeout(() => {
-        const event = new CustomEvent("change-song");
-        document.dispatchEvent(event);
-    });
 }
 
 export const MoodContext = createContext(null);

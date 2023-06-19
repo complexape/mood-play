@@ -1,12 +1,25 @@
 import Cookies from "js-cookie";
 import { DEFAULT_SONG } from "../constants";
 
+export const changeSong = (newSongURI) => {
+    const embedContainer = document.getElementById('spotify-iframe-container');
+    embedContainer.setAttribute('data-songURI', newSongURI)
+    setTimeout(() => {
+        const event = new CustomEvent("change-song");
+        document.dispatchEvent(event);
+    });
+}
+
 window.onSpotifyIframeApiReady = (IFrameAPI) => {
     const element = document.getElementById('spotify-iframe');
+    let song_uri = DEFAULT_SONG;
+    if (Cookies.get('spotifyAuthToken') && Cookies.get('defaultSong')) {
+        song_uri = Cookies.get('defaultSong');
+    }
     const options = {
         width: '80%',
         height: '300',
-        uri: DEFAULT_SONG || Cookies.get('defaultSong')
+        uri: song_uri
     };
 
     // ** The Spotify IFrame Embed shows songs as preview if you're
@@ -14,7 +27,7 @@ window.onSpotifyIframeApiReady = (IFrameAPI) => {
     const callback = (EmbedController) => {
         const handleNextSong = () => {
             const embedContainer = document.getElementById('spotify-iframe-container');
-            const songURI = embedContainer.getAttribute('data-songURI') || DEFAULT_SONG;
+            const songURI = embedContainer.getAttribute('data-songURI');
             EmbedController.loadUri(songURI);
             EmbedController.play();
         }

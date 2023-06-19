@@ -8,10 +8,12 @@ import {
     RouteLink
 } from './NavbarElements';
 import { MoodContext } from '../../context/MoodContext';
+import { SpotifyAuthContext } from '../../context/SpotifyAuthContext';
 
 const Navbar = () => {
     const location = useLocation();
     const { mood } = useContext(MoodContext);
+    const { token } = useContext(SpotifyAuthContext)
 
     return (
         <NavbarContainer >
@@ -35,7 +37,7 @@ const Navbar = () => {
                     isActive={location.pathname === '/sign-in'}
                     mood={mood}
                 >
-                    Sign In to Spotify
+                    {token ? "Log Out" : "Sign In to Spotify"}
                 </RouteLink>
             </RoutesContainer>
         </NavbarContainer>

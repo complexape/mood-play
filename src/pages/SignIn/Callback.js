@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { SpotifyAuthContext } from '../context/SpotifyAuthContext';
+import { SpotifyAuthContext } from '../../context/SpotifyAuthContext';
 
 const Callback = () => {
     const navigate = useNavigate();

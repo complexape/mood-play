@@ -6,9 +6,102 @@ export const COOLDOWN_SECONDS = 1;
 
 export const DEFAULT_SONG = "https://open.spotify.com/track/5BZ4aodJTESrcaGQERLzjV?si=535c34478d434568";
 
+export const EMOTIONS = {
+    "neutral": {
+        value: "neutral",
+        display: "Neutral 😶",
+        primaryColor: "#E1BBC9",
+        secondaryColor: "#BBE1D3",
+        waveColorA: "rgba(153, 50, 204, 0.3)",
+        waveColorB: "rgba(30, 144, 225, 0.3)",
+        waveColorC: "rgba(220, 20, 60, 0.3)",
+        textColor: "#1B1F3B",
+        textColorAlt: "#FFFFF2",
+    },
+    "tired": {
+        value: "tired",
+        display: "Tired 😴",
+        primaryColor: "#191D32",
+        secondaryColor: "#322E19",
+        waveColorA: "rgba(124, 152, 179, 0.3)",
+        waveColorB: "rgba(172, 203, 225, 0.3)",
+        waveColorC: "rgba(206, 229, 242, 0.3)",
+        textColor: "#FFFFF2",
+        textColorAlt: "#1B1F3B",
+    },
+    "happy": {
+        value: "happy",
+        display: "Happy 😃",
+        primaryColor: "#FEC601",
+        secondaryColor: "#D11149",
+        waveColorA: "rgba(238, 171, 196, 0.3)",
+        waveColorB: "rgba(199, 153, 166, 0.3)",
+        waveColorC: "rgba(75, 40, 64, 0.3)",
+        textColor: "#1B1F3B",
+        textColorAlt: "#FFFFF2"
+    },
+    "sad": {
+        value: "sad",
+        display: "Sad 😔",
+        primaryColor: "#4E4C67",
+        secondaryColor: "#65674C",
+        waveColorA: "rgba(154, 152, 181, 0.3)",
+        waveColorB: "rgba(160, 185, 198, 0.3)",
+        waveColorC: "rgba(165, 248, 211, 0.3)",
+        textColor: "#FFFFF2",
+        textColorAlt: "#1B1F3B",
+    },
+    "angry": {
+        value: "angry",
+        display: "Angry 😠",
+        primaryColor: "#A62329",
+        secondaryColor: "#E5F77D",
+        waveColorA: "rgba(54, 17, 52, 0.3)",
+        waveColorB: "rgba(243, 145, 160, 0.3)",
+        waveColorC: "rgba(237, 230, 242, 0.3)",
+        textColor: "#FFFFF2",
+        textColorAlt: "#1B1F3B",
+    },
+    "disgust": {
+        value: "disgust",
+        display: "Disgusted 🤢",
+        primaryColor: "#086375",
+        secondaryColor: "#BFAE48",
+        waveColorA: "rgba(54, 5, 104, 0.3)",
+        waveColorB: "rgba(230, 52, 98, 0.3)",
+        waveColorC: "rgba(254, 95, 85, 0.3)",
+        textColor: "#FFFFF2",
+        textColorAlt: "#1B1F3B",
+    },
+    "fear": {
+        value: "fear",
+        display: "Afraid 😨",
+        primaryColor: "#897C80",
+        secondaryColor: "#7C8985",
+        waveColorA: "rgba(115, 0, 113, 0.3)",
+        waveColorB: "rgba(25, 25, 35, 0.3)",
+        waveColorC: "rgba(251, 254, 249, 0.3)",
+        textColor: "#1B1F3B",
+        textColorAlt: "#FFFFF2",
+    },
+    "surprise": {
+        value: "surprise",
+        display: "Surprised 😮",
+        primaryColor: "#C5D86D",
+        secondaryColor: "#806DD8",
+        waveColorA: "rgba(247, 86, 124, 0.3)",
+        waveColorB: "rgba(37, 161, 142, 0.3)",
+        waveColorC: "rgba(16, 37, 66, 0.3)",
+        textColor: "#1B1F3B",
+        textColorAlt: "#FFFFF2",
+    },
+}
+
 export const DEFAULT_PLAYLISTS = {
     "neutral": {
         "url": "",
+        "name": "",
+        "image": "",
         "songs": [
             "https://open.spotify.com/track/5BZ4aodJTESrcaGQERLzjV?si=535c34478d434568",
             "https://open.spotify.com/track/1U8tjMoPRPAkNkunfH5OxD?si=48bb550e4bf14f89",
@@ -22,6 +115,8 @@ export const DEFAULT_PLAYLISTS = {
     },
     "happy": {
         "url": "",
+        "name": "",
+        "image": "",
         "songs": [
             "https://open.spotify.com/track/4Dvkj6JhhA12EX05fT7y2e?si=c19c048f22284fa5",
             "https://open.spotify.com/track/1rqqCSm0Qe4I9rUvWncaom?si=551199d66a5a48db",
@@ -35,6 +130,8 @@ export const DEFAULT_PLAYLISTS = {
     },
     "tired": {
         "url": "",
+        "name": "",
+        "image": "",
         "songs": [
             "https://open.spotify.com/track/2Cz4rYup2tiEdyGX0IWnH7?si=6f4cc5d262284f90",
             "https://open.spotify.com/track/7gqe2hMeAKoxif1jrPihCv?si=d4302cc96d5f4dad",
@@ -48,6 +145,8 @@ export const DEFAULT_PLAYLISTS = {
     },
     "sad": {
         "url": "",
+        "name": "",
+        "image": "",
         "songs": [
             "https://open.spotify.com/track/13NC44aS3d0EFF58oVQ8T7?si=6926583e5caf4f1c",
             "https://open.spotify.com/track/3U4isOIWM3VvDubwSI3y7a?si=aab1c4ba3f884118",
@@ -61,6 +160,8 @@ export const DEFAULT_PLAYLISTS = {
     },
     "angry": {
         "url": "",
+        "name": "",
+        "image": "",
         "songs": [
             "https://open.spotify.com/track/2pxAohyJptQWTQ5ZRWYijN?si=101c3222a09c4048",
             "https://open.spotify.com/track/33c2SurTuBpaWAW9YKlvqC?si=7f05731bf8c44fab",
@@ -74,12 +175,16 @@ export const DEFAULT_PLAYLISTS = {
     },
     "surprise": {
         "url": "",
+        "name": "",
+        "image": "",
         "songs": [
             "https://open.spotify.com/track/4cOdK2wGLETKBW3PvgPWqT?si=575d065658134bbd",
         ],
     },
     "disgust": {
         "url": "",
+        "name": "",
+        "image": "",
         "songs": [
             "https://open.spotify.com/track/6foY66mWZN0pSRjZ408c00?si=59fde61bff2142ee",
             "https://open.spotify.com/track/6iy4PoAuZBMvtrlDX4VxC7?si=9c079e8fa2254181",
@@ -91,6 +196,8 @@ export const DEFAULT_PLAYLISTS = {
     },
     "fear": {
         "url": "",
+        "name": "",
+        "image": "",
         "songs": [
             "https://open.spotify.com/track/4WJ7UMD4i6DOPzyXU5pZSz?si=05102f2293f04d66",
             "https://open.spotify.com/track/1UvaZaHkh3D9AkmBrrnbFg?si=d0e10249d3704ccb",

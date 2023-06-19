@@ -22,7 +22,7 @@ export const Select = styled.select`
 export const Option = styled.option`
     color: black;
     background: white;
-    fdisplay: flex;
+    display: flex;
     white-space: pre;
     min-height: 20px;
     padding: 0px 2px 1px;

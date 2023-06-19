@@ -19,6 +19,7 @@ const SpotifyAuthButton = () => {
 const StyledSpotifyAuth = styled(SpotifyAuth)`
     display: flex;
     align-items: center;
+    text-align: center;
     justify-content: center;
 `;
 

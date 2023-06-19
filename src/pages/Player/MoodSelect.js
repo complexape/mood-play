@@ -1,6 +1,7 @@
 import React, {useContext} from 'react'
 import styled from 'styled-components';
-import { MoodContext, EMOTIONS } from '../../context/MoodContext';
+import { MoodContext } from '../../context/MoodContext';
+import { EMOTIONS } from '../../constants';
 
 const Button = styled.button`
     font-size: 40px;

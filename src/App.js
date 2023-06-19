@@ -4,12 +4,12 @@ import { MoodContextProvider } from './context/MoodContext';
 import './App.css';
 import Navbar from './components/Navbar';
 import Settings from './pages/Settings';
-import Signin from './pages/SignIn/Signin';
-import Player from './pages/Player/Player';
+import Signin from './pages/SignIn';
+import Player from './pages/Player';
 import Wave from './components/Wave';
 import SpotifyIFrameContainer from './components/SpotifyIFrameContainer';
 import './middleware/spotify';
-import Callback from './pages/Callback';
+import Callback from './pages/SignIn/Callback';
 
 function App() {
     return (
