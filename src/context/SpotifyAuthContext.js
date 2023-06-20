@@ -29,7 +29,6 @@ export const SpotifyAuthProvider = ({ children }) => {
         Object.keys(DEFAULT_PLAYLISTS).map(async (mood) => {
             const url = Cookies.get(`${mood}PlaylistUrl`);
             await changeMoodPlaylist(mood, url);
-            console.log(mood, url, playlists);
         });
     }, []);
 

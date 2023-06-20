@@ -24,10 +24,10 @@ const Settings = () => {
 };
 
 const EditPlaylistsContainer = styled.div`
-    display: grid;
-    grid-template-columns: auto auto;
-    grid-gap: 6px;
-    padding: 6px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
 `;
 
 export default Settings;

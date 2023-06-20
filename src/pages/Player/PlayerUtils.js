@@ -5,7 +5,9 @@ import {
     FACE_RESOLUTION,
     EYE_THRESHOLD,
     EYE_MARGIN,
-    FACE_MARGIN
+    FACE_MARGIN,
+    SOFT_EYE_THRESHOLD,
+    TIRED_EMOTIONS
 } from '../../constants/DetectionConstants'
 
 const cropImage = (img, width, height, x, y, margin_factor) => {
@@ -88,7 +90,7 @@ const extractFaceAndEyes = async (base64Image) => {
 }
 
 export const predictScreenshots = async (screenshots) => {
-    let isTired = true;
+    let [isAsleep, isTired] = [true, true];
     let moodPredictions = {
         "neutral": 1,
         "happy": 1,
@@ -119,8 +121,8 @@ export const predictScreenshots = async (screenshots) => {
             moodPredictions[emotion] *= value;
         });
 
-        isTired &= leftEyePrediction["closed_eye"] > EYE_THRESHOLD;
-        isTired &= rightEyePrediction["closed_eye"] > EYE_THRESHOLD;
+        isAsleep &= leftEyePrediction["closed_eye"] > EYE_THRESHOLD && rightEyePrediction["closed_eye"] > EYE_THRESHOLD;
+        isTired &= leftEyePrediction["closed_eye"] > SOFT_EYE_THRESHOLD && rightEyePrediction["closed_eye"] > SOFT_EYE_THRESHOLD;
     }));
         
     let maxEmotion = "neutral";
@@ -129,6 +131,8 @@ export const predictScreenshots = async (screenshots) => {
             maxEmotion = emotion;
         }
     });
+    
+    isAsleep &= TIRED_EMOTIONS.includes(maxEmotion);
 
-    return isTired ? "tired" : maxEmotion;
+    return isTired || isAsleep ? "tired" : maxEmotion;
   };

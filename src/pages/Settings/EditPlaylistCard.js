@@ -19,7 +19,7 @@ const EditPlaylistCard = ({mood}) => {
     } 
 
     return (
-        <Div>
+        <Div mood={EMOTIONS[mood]}>
             <h2>{EMOTIONS[mood].display} Playlist</h2>
             <PlaylistCard mood={mood}/>
             <Form onSubmit={handlePlaylistChange}>
@@ -43,13 +43,14 @@ const Input = styled.input`
 
 const Div = styled.div`
     user-select: none;
-    display: inline-grid;
-    background-color: #FFFFF2;
+    flex: 1;
+    background-image: linear-gradient(45deg, ${(props) => props.mood.primaryColor} 10%, ${(props) => props.mood.secondaryColor});
     border-radius: 12px;
     justify-content: center;
     margin: 10px;
     text-align: center;
-    color: #555555;
+    color: ${(props) => props.mood.textColor};
+    border: 4px solid ${(props) => props.mood.textColor};
     padding: 10px;
 `;
 
