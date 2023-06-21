@@ -72,7 +72,6 @@ export const SpotifyAuthProvider = ({ children }) => {
     }
 
     const changeMoodPlaylist = async (playlistObj) => {
-        console.log(playlistObj)
         let newPlaylists = JSON.parse(JSON.stringify(playlists));
         await Promise.all(Object.entries(playlistObj).map(async ([mood, playlistUrl]) => {
             if (DEFAULT_PLAYLISTS[mood] === undefined) {

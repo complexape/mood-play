@@ -77,7 +77,7 @@ export const MoodContextProvider = ({ children }) => {
         return () => {
             document.removeEventListener('next-song', handleNextSong)
         };
-    }, [mood, shuffle, songIndex]);
+    }, [mood, shuffle, songIndex, playlists]);
 
     const value = {
         mood,

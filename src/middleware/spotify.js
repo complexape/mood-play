@@ -1,5 +1,4 @@
 import Cookies from "js-cookie";
-import { DEFAULT_SONG } from "../constants";
 
 export const changeSong = (newSongURI) => {
     const embedContainer = document.getElementById('spotify-iframe-container');
@@ -10,12 +9,14 @@ export const changeSong = (newSongURI) => {
     });
 }
 
+const DEFAULT_SONG = "https://open.spotify.com/track/5BZ4aodJTESrcaGQERLzjV?si=535c34478d434568";
+
 window.onSpotifyIframeApiReady = (IFrameAPI) => {
     const element = document.getElementById('spotify-iframe');
-    let song_uri = DEFAULT_SONG;
-    if (Cookies.get('spotifyAuthToken') && Cookies.get('defaultSong')) {
-        song_uri = Cookies.get('defaultSong');
-    }
+    let song_uri = Cookies.get('spotifyAuthToken') && Cookies.get('defaultSong')
+        ? Cookies.get('defaultSong')
+        : DEFAULT_SONG
+
     const options = {
         width: '80%',
         height: '300',
