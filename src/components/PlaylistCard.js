@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components';
 import { useContext } from 'react';
+import { FaSpotify } from 'react-icons/fa'
 import { SpotifyAuthContext } from '../context/SpotifyAuthContext';
 
 const Div = styled.div`
@@ -26,6 +27,22 @@ const Img = styled.img`
     max-height: 128px;
 `;
 
+const Link = styled.a`
+    text-decoration: none;
+
+    &:visited {
+        text-decoration: none;
+    }
+
+    &:active {
+        text-decoration: none;
+    }
+
+    &:hover {
+        text-decoration: none;
+    }
+`;
+
 const PlaylistCard = ({ mood }) => {
     const { playlists } = useContext(SpotifyAuthContext);
     const { name, url, image, songs } = playlists[mood];
@@ -39,7 +56,7 @@ const PlaylistCard = ({ mood }) => {
                 <InfoContainer>
                     <h2>{name}</h2>
                     <p>{songs.length} songs</p>
-                    <a href={url}>Spotify Link</a>
+                    <Link href={url}>Spotify Link <FaSpotify/></Link>
                 </InfoContainer>
             </Div>
             : <Div>(None)</Div>
