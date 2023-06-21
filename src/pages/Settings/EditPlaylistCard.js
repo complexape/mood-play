@@ -11,12 +11,20 @@ const EditPlaylistCard = ({mood}) => {
 
     const handlePlaylistChange = async (event) =>{
         event.preventDefault();
-        const ok = await changeMoodPlaylist(mood, event.target.elements.input.value);
+        let playlistObj = {};
+        playlistObj[mood] = event.target.elements.input.value;
+        const ok = await changeMoodPlaylist(playlistObj);
         if (!ok) {
-            alert("Error: could not find Spotify playlist.")
+            alert('Error: could not find Spotify playlist.')
         }
         event.target.elements.input.value = '';
     } 
+
+    const handleDefaultPlaylistChange = async () => {
+        let playlistObj = {}
+        playlistObj[mood] = ''
+        await changeMoodPlaylist(playlistObj);
+    }
 
     return (
         <Div mood={EMOTIONS[mood]}>
@@ -26,7 +34,7 @@ const EditPlaylistCard = ({mood}) => {
                 <Input type='text' name='input' placeholder='enter a Spotify playlist URL..'/>
                 <MiniButton type='submit'>Change</MiniButton>
             </Form>
-            <MiniButton onClick={() => changeMoodPlaylist(mood, "")}>Reset to Default</MiniButton>
+            <MiniButton onClick={handleDefaultPlaylistChange}>Reset to Default</MiniButton>
         </Div>
     )
 }
@@ -43,7 +51,7 @@ const Input = styled.input`
 
 const Div = styled.div`
     user-select: none;
-    flex: 1;
+    display: grid;
     background-image: linear-gradient(45deg, ${(props) => props.mood.primaryColor} 10%, ${(props) => props.mood.secondaryColor});
     border-radius: 12px;
     justify-content: center;

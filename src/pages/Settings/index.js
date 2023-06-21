@@ -12,22 +12,22 @@ const Settings = () => {
             {!token ? <Header>Please Log In To Spotify!</Header> : 
                 <>  
                     <Header>Edit Playlists</Header>
-                    <EditPlaylistsContainer>
+                    <PlaylistContainer>
                         {Object.entries(playlists).map(([mood, obj], index) => (
                             <EditPlaylistCard mood={mood} key={index}/>
                         ))}
-                    </EditPlaylistsContainer>
+                    </PlaylistContainer>
                 </>
             }
         </>
     );
 };
 
-const EditPlaylistsContainer = styled.div`
+const PlaylistContainer = styled.div`
     width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
 `;
 
 export default Settings;

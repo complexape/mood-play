@@ -18,18 +18,12 @@ const Div = styled.div`
 const InfoContainer = styled.div`
     margin-left: 20px;
     margin-right: 20px;
-    justify-content: space-around;
+    justify-content: space-between;
 `;
 
 const Img = styled.img`
     max-width: 128px;
     max-height: 128px;
-`;
-
-const Title = styled.h2`
-`;
-
-const Link = styled.a`
 `;
 
 const PlaylistCard = ({ mood }) => {
@@ -43,9 +37,9 @@ const PlaylistCard = ({ mood }) => {
             ? <Div>
                 <Img src={image}/>
                 <InfoContainer>
-                    <Title>{name}</Title>
-                    {songs.length} songs
-                    <Link href={url}>Spotify Link</Link>
+                    <h2>{name}</h2>
+                    <p>{songs.length} songs</p>
+                    <a href={url}>Spotify Link</a>
                 </InfoContainer>
             </Div>
             : <Div>(None)</Div>
