@@ -4,7 +4,7 @@ export const StyledDiv = styled.div`
     display: inline-block;
     position: absolute;
     width: 100%;
-    padding-bottom: 100%;
+    padding-bottom: min(100vh, 100%);
     vertical-align: middle;
     overflow: hidden;
     top: 0;

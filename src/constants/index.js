@@ -1,8 +1,7 @@
 export const EMOTION_URL = "https://mood-detection-api.vercel.app/api/predict-emotion";
 export const TIRED_URL = "https://mood-detection-api.vercel.app/api/predict-tired";
 
-// INCREASE IN PROD
-export const COOLDOWN_SECONDS = 1;
+export const COOLDOWN_SECONDS = 5;
 
 export const EMOTIONS = {
     "neutral": {
