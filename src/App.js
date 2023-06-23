@@ -6,6 +6,7 @@ import Credits from './components/Credits';
 import Settings from './pages/Settings';
 import Signin from './pages/SignIn';
 import Player from './pages/Player';
+import Home from './pages/Home';
 import Wave from './components/Wave';
 import SpotifyIFrameContainer from './components/SpotifyIFrameContainer';
 import Callback from './pages/SignIn/Callback';
@@ -18,7 +19,8 @@ function App() {
                     <Navbar />
                     <Wave />
                     <Routes>
-                        <Route path='/' element={<Player/>} />
+                        <Route path='/' element={<Home/>} />
+                        <Route path='/player' element={<Player/>} />
                         <Route path='/settings' element={<Settings/>} />
                         <Route path='/sign-in' element={<Signin/>} />
                         <Route path='/callback' element={<Callback/>} />

@@ -20,8 +20,8 @@ const Navbar = () => {
             <Logo mood={mood} to='/'>MoodPlay</Logo>
             <RoutesContainer>
                 <RouteLink 
-                    to='/' 
-                    isActive={location.pathname === '/'}
+                    to='/player' 
+                    isActive={location.pathname === '/player'}
                     mood={mood}
                 >
                     Player

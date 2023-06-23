@@ -18,7 +18,7 @@ const Callback = () => {
     
         if (hash.access_token) {
             setToken(hash.access_token);
-            navigate('/')
+            navigate('/player')
         }
       }, [navigate]);
     
